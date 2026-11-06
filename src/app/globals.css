@@ -1,0 +1,175 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Noto+Nastaliq+Urdu:wght@400;500;600;700&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --ruby-primary: #b91c1c;
+  --ruby-dark: #991b1b;
+  --charcoal: #262626;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+[lang='ur'] {
+  font-family: 'Noto Nastaliq Urdu', 'Jameel Noori Nastaleeq', serif;
+  direction: rtl;
+}
+
+::selection {
+  background-color: #fecaca;
+  color: #450a0a;
+}
+
+.line-clamp-2 {
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.line-clamp-3 {
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+@layer base {
+  h1,
+  h2,
+  h3,
+  h4 {
+    text-wrap: balance;
+  }
+
+  p {
+    text-wrap: pretty;
+  }
+
+  summary::-webkit-details-marker {
+    display: none;
+  }
+
+  input[type='number']::-webkit-outer-spin-button,
+  input[type='number']::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+  }
+
+  input[type='number'] {
+    -moz-appearance: textfield;
+  }
+}
+
+@layer components {
+  .btn-primary {
+    @apply inline-flex items-center justify-center gap-2 rounded-lg bg-ruby-600 px-6 py-2.5 font-semibold text-white transition-colors duration-200 hover:bg-ruby-700 focus:outline-none focus:ring-2 focus:ring-ruby-500 focus:ring-offset-2 disabled:cursor-not-allowed disabled:bg-gray-300 disabled:text-gray-500;
+  }
+
+  .btn-secondary {
+    @apply inline-flex items-center justify-center gap-2 rounded-lg border border-gray-300 bg-white px-6 py-2.5 font-semibold text-charcoal-800 transition-colors duration-200 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-ruby-500 focus:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-60;
+  }
+
+  .btn-ghost {
+    @apply inline-flex items-center justify-center gap-2 rounded-lg px-4 py-2 text-sm font-semibold text-charcoal-700 transition-colors hover:bg-gray-100 hover:text-ruby-600;
+  }
+
+  .input-field {
+    @apply w-full rounded-lg border border-gray-300 bg-white px-4 py-2.5 text-sm text-charcoal-900 placeholder:text-gray-400 focus:border-transparent focus:outline-none focus:ring-2 focus:ring-ruby-500;
+  }
+
+  .label-field {
+    @apply mb-1.5 block text-sm font-medium text-charcoal-700;
+  }
+
+  .card {
+    @apply overflow-hidden rounded-2xl border border-gray-100 bg-white shadow-sm transition-shadow duration-200 hover:shadow-md;
+  }
+
+  .chip {
+    @apply inline-flex items-center gap-1 rounded-full bg-gray-100 px-3 py-1 text-xs font-medium text-charcoal-600;
+  }
+
+  .prose-ruby p {
+    @apply mb-4 leading-7 text-charcoal-600;
+  }
+
+  .prose-ruby h2 {
+    @apply mb-3 mt-8 text-xl font-bold text-charcoal-900;
+  }
+
+  .prose-ruby h3 {
+    @apply mb-2 mt-6 text-lg font-semibold text-charcoal-900;
+  }
+
+  .prose-ruby ul {
+    @apply mb-4 list-disc space-y-2 pl-5 text-charcoal-600;
+  }
+
+  .prose-ruby a {
+    @apply font-medium text-ruby-600 underline decoration-ruby-200 underline-offset-2 hover:text-ruby-700;
+  }
+}
+
+@layer utilities {
+  .animation-fade-up {
+    animation: fade-up 0.6s ease-out both;
+  }
+
+  .animation-fade-in {
+    animation: fade-in 0.5s ease-out both;
+  }
+
+  .text-balance {
+    text-wrap: balance;
+  }
+
+  .safe-bottom {
+    padding-bottom: max(1rem, env(safe-area-inset-bottom));
+  }
+}
+
+@keyframes fade-up {
+  from {
+    opacity: 0;
+    transform: translateY(14px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fade-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}

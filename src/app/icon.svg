@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="Ruby's.pk">
+  <defs>
+    <linearGradient id="ruby" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#dc2626" />
+      <stop offset="1" stop-color="#7f1d1d" />
+    </linearGradient>
+  </defs>
+  <rect width="64" height="64" rx="16" fill="url(#ruby)" />
+  <path d="M21 46V18h12.4c5.6 0 9.6 3.4 9.6 8.7 0 3.7-1.9 6.5-5.2 7.8L44 46h-6.6l-5.1-10.1h-5.2V46H21Zm6.1-15.1h5.7c2.7 0 4.3-1.4 4.3-3.9 0-2.5-1.6-3.9-4.3-3.9h-5.7v7.8Z" fill="#fff" />
+</svg>
