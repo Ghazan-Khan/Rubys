@@ -2,17 +2,19 @@
 /**
  * Create or update a Ruby's.pk administrator.
  *
- * Usage (recommended for servers):
+ * Recommended (interactive, password input hidden):
+ *   npm run admin:create
+ *
+ * For automated servers, set the details in the environment instead:
  *   ADMIN_EMAIL=you@example.com ADMIN_PASSWORD='a-strong-password' \
  *     ADMIN_FIRST_NAME=Ruby ADMIN_LAST_NAME=Admin ADMIN_PHONE=03001234567 \
  *     npm run admin:create
  *
- * Or pass flags:
- *   npm run admin:create -- --email you@example.com --password '...' \
- *     --first-name Ruby --last-name Admin --phone 03001234567
- *
  * Existing accounts are only modified when --update is supplied.
  * Passwords are hashed with scrypt; the plain password is never stored.
+ *
+ * The script reads DATABASE_PATH from the environment, then .env.local,
+ * then .env, so it targets the same database as the deployed app.
  */
 import { DatabaseSync } from 'node:sqlite';
 import { randomBytes, randomUUID, scryptSync } from 'node:crypto';
@@ -20,9 +22,11 @@ import fs from 'node:fs';
 import path from 'node:path';
 import readline from 'node:readline/promises';
 import { fileURLToPath } from 'node:url';
+import { loadEnvFiles } from './load-env.mjs';
 import { runMigrations } from './migrate-lib.mjs';
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
+loadEnvFiles(root);
 const dbPath = path.resolve(root, process.env.DATABASE_PATH || path.join('data', 'rubys.db'));
 const updateExisting = process.argv.includes('--update');
 
@@ -112,10 +116,12 @@ function promptHidden(question) {
 
 async function main() {
   if (!fs.existsSync(dbPath)) {
-    console.error(`Database not found: ${path.relative(root, dbPath)}`);
+    console.error(`Database not found: ${dbPath}`);
     console.error('Run `npm run db:init` first.');
     process.exit(1);
   }
+
+  console.log(`Using database: ${dbPath}`);
 
   const db = new DatabaseSync(dbPath);
   db.exec('PRAGMA foreign_keys = ON;');
@@ -213,7 +219,12 @@ async function main() {
     console.log(`Created ${role} account: ${email}`);
   }
 
-  console.log('Sign in at /admin/login. Keep the password in a password manager.');
+  const siteUrl = (process.env.NEXT_PUBLIC_SITE_URL || '').replace(/\/$/, '');
+  console.log(
+    siteUrl
+      ? `Sign in at ${siteUrl}/admin/login. Keep the password in a password manager.`
+      : 'Sign in at /admin/login. Keep the password in a password manager.'
+  );
   db.close();
 }
 

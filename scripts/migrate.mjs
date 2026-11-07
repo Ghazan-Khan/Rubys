@@ -12,9 +12,11 @@ import { DatabaseSync } from 'node:sqlite';
 import fs from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
+import { loadEnvFiles } from './load-env.mjs';
 import { runMigrations } from './migrate-lib.mjs';
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
+loadEnvFiles(root);
 const dbPath = path.resolve(root, process.env.DATABASE_PATH || path.join('data', 'rubys.db'));
 
 if (!fs.existsSync(dbPath)) {
@@ -28,7 +30,7 @@ db.exec('PRAGMA foreign_keys = ON;');
 db.exec('PRAGMA journal_mode = WAL;');
 db.exec('PRAGMA busy_timeout = 5000;');
 
-console.log(`Using database: ${path.relative(root, dbPath)}`);
+console.log(`Using database: ${dbPath}`);
 runMigrations(db, { log: (message) => console.log(message) });
 console.log('Migrations applied.');
 

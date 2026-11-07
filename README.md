@@ -75,6 +75,7 @@ The database file is created at `data/rubys.db`. It is created automatically the
 | `npm run db:migrate` | Apply additive admin migrations to an existing database |
 | `npm run db:reset` | Delete and rebuild the database from scratch |
 | `npm run admin:create` | Create or update an administrator account (prompts securely) |
+| `npm run admin:status` | Show which administrator accounts exist (never prints hashes) |
 
 > `db:reset` removes `data/rubys.db` and recreates it. Use it only when you are happy to lose local data.
 > `db:migrate` and `admin:create` never delete products, orders or customers.
@@ -91,7 +92,7 @@ DATABASE_PATH=./data/rubys.db
 - `DATABASE_PATH` — location of the SQLite file. Relative paths resolve from the project root. The default is `./data/rubys.db`.
 - `NEXT_PUBLIC_SITE_URL` — used for canonical URLs, sitemap and structured data. Set this to your live domain in production.
 
-Admin accounts are not configured through the app. Use `npm run admin:create`; for non-interactive servers you can provide `ADMIN_EMAIL`, `ADMIN_PASSWORD`, `ADMIN_FIRST_NAME`, `ADMIN_LAST_NAME`, `ADMIN_PHONE` and `ADMIN_ROLE` instead of typing the prompts.
+Admin accounts are not configured through the app. Use `npm run admin:create`; for non-interactive servers you can provide `ADMIN_EMAIL`, `ADMIN_PASSWORD`, `ADMIN_FIRST_NAME`, `ADMIN_LAST_NAME`, `ADMIN_PHONE` and `ADMIN_ROLE` instead of typing the prompts. The standalone scripts read `DATABASE_PATH` from the environment first, then `.env.local`, then `.env`, so they target the same database as the deployed app. Use `npm run admin:status` to check whether an administrator already exists.
 
 ## Database
 
@@ -148,7 +149,7 @@ This avoids an external auth provider while keeping passwords and sessions serve
 
 The admin area lives at `/admin` and is deliberately separate from the customer account pages.
 
-- **Bootstrap:** run `npm run admin:create`. No admin is seeded and there is no default password. The script validates a strong password and stores only the scrypt hash.
+- **First-time setup:** no admin is seeded and no default password exists. The first account with the `admin` role is the Super Admin. Create it on the server with `npm run admin:create`; the password prompt is hidden and only the scrypt hash is stored. A public web setup form is intentionally not provided, because before the first admin exists such a form would let anyone claim the site.
 - **Login:** `/admin/login` accepts only users with the `admin` or `manager` role. Customer sessions are rejected even if they navigate directly to an admin URL.
 - **Server-side protection:** the protected `/admin/(dashboard)` layout calls `requireAdminPage()`. Every `/api/admin/*` route also verifies the session, the role and the request origin.
 - **Rate limiting:** failed logins are recorded in `login_attempts`; after 5 failures for the same email/IP or 20 for an IP within 15 minutes, sign-in is blocked.
@@ -157,13 +158,35 @@ The admin area lives at `/admin` and is deliberately separate from the customer 
 - **Product deletion:** products are soft-deleted with `products.deleted_at`; archived products can be restored from `/admin/products?archived=1`.
 - **SEO:** admin pages send `noindex, nofollow`, `X-Robots-Tag` and `Cache-Control: no-store`, and `/admin` is disallowed in `robots.txt`.
 
-To create another admin or reset an existing admin password:
+### Create the first Super Admin
+
+Run this on the machine or Hostinger shell that has access to the production database:
 
 ```bash
-npm run admin:create -- --email you@example.com --first-name Ruby --last-name Admin --phone 03001234567
-# or update an existing account
-npm run admin:create -- --update --email you@example.com
+npm run db:migrate
+npm run admin:create
 ```
+
+The script prints the exact database file it will use, then prompts for:
+
+- your admin email address
+- first and last name
+- a Pakistani mobile number (`03xxxxxxxxx`)
+- role — choose `admin` (the Super Admin role)
+- password — typed with hidden input, never echoed or stored in plain text
+
+The password must be at least 12 characters and contain lowercase, uppercase, a number and a symbol. After it succeeds, sign in at:
+
+- local: `http://localhost:3000/admin/login`
+- Hostinger: `https://your-domain.com/admin/login`
+
+Check the account at any time without exposing hashes:
+
+```bash
+npm run admin:status
+```
+
+To reset an existing admin password, run `npm run admin:create -- --update --email you@example.com` and enter a new password at the hidden prompt.
 
 ## Payments & delivery
 
@@ -201,13 +224,17 @@ Hostinger's Node.js hosting runs the app with a persistent filesystem, so the SQ
 
    Use an absolute `DATABASE_PATH` outside the deploy directory (for example `~/rubys-data/rubys.db`). The parent directory is created automatically and SQLite writes its `-wal`/`-shm` files next to it. Uploaded images are stored in the same database, so nothing else needs a writable public folder.
 
-4. **Create the first administrator** on the server. The database must already exist (run `npm run db:migrate`, or `npm run db:init` for a fresh store):
+4. **Create the first Super Admin** on the server. The database must already exist (run `npm run db:migrate`, or `npm run db:init` for a fresh store):
 
    ```bash
+   # Make the shell use the same production database as the app:
+   export DATABASE_PATH=/home/USERNAME/rubys-data/rubys.db
+   npm run db:migrate
    npm run admin:create
+   npm run admin:status
    ```
 
-   On a non-interactive shell, set `ADMIN_EMAIL`, `ADMIN_PASSWORD`, `ADMIN_FIRST_NAME`, `ADMIN_LAST_NAME`, `ADMIN_PHONE` and optionally `ADMIN_ROLE`, then run the same command. Delete those temporary variables afterwards.
+   `admin:create` prints the exact database path before writing and prompts for your own email, name, phone, role and password (hidden input). The script also reads `DATABASE_PATH` from `.env.local` or `.env` if present, so it can target the same file as the deployed app. On a non-interactive shell, set `ADMIN_EMAIL`, `ADMIN_PASSWORD`, `ADMIN_FIRST_NAME`, `ADMIN_LAST_NAME`, `ADMIN_PHONE` and optionally `ADMIN_ROLE`, then run the same command. Delete those temporary variables afterwards.
 
 5. **Start the app** with the Node.js app's start command (typically `npm run start`). Hostinger terminates TLS and proxies requests, so the app sets `secure` cookies automatically when `NODE_ENV=production`.
 

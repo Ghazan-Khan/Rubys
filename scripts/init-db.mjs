@@ -13,9 +13,11 @@ import { randomUUID, randomBytes, scryptSync } from 'node:crypto';
 import fs from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
+import { loadEnvFiles } from './load-env.mjs';
 import { runMigrations } from './migrate-lib.mjs';
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
+loadEnvFiles(root);
 const schemaPath = path.join(root, 'database.sql');
 const seedPath = path.join(root, 'database', 'seed.sql');
 const dbPath = path.resolve(root, process.env.DATABASE_PATH || path.join('data', 'rubys.db'));
