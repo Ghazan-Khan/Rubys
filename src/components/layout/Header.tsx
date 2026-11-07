@@ -29,6 +29,9 @@ export default function Header({ categories, user }: HeaderProps) {
   const { count: wishlistCount, ready: wishlistReady } = useWishlist();
   const pathname = usePathname();
 
+  // The admin dashboard has its own shell and must not inherit storefront chrome.
+  if (pathname.startsWith('/admin')) return null;
+
   const navLinks = [
     { name: 'Shop all', href: '/shop' },
     { name: 'Track order', href: '/track-order' },

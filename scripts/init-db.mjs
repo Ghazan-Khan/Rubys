@@ -13,6 +13,7 @@ import { randomUUID, randomBytes, scryptSync } from 'node:crypto';
 import fs from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
+import { runMigrations } from './migrate-lib.mjs';
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const schemaPath = path.join(root, 'database.sql');
@@ -54,6 +55,8 @@ db.exec('PRAGMA journal_mode = WAL;');
 console.log(`Using database: ${path.relative(root, dbPath)}`);
 db.exec(fs.readFileSync(schemaPath, 'utf8'));
 console.log('Schema ready.');
+runMigrations(db, { log: (message) => console.log(message) });
+console.log('Migrations applied.');
 db.exec(fs.readFileSync(seedPath, 'utf8'));
 console.log('Seed data loaded.');
 

@@ -28,6 +28,7 @@ export default function ProductCard({ product, className }: ProductCardProps) {
             emoji={product.emoji}
             name={product.name}
             categoryName={product.categoryName}
+            imageUrl={product.imageUrl}
             className="aspect-square w-full"
           />
         </Link>

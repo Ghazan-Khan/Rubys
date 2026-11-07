@@ -10,7 +10,9 @@
     "lint": "next lint",
     "type-check": "tsc --noEmit",
     "db:init": "node scripts/init-db.mjs",
-    "db:reset": "node scripts/init-db.mjs --reset"
+    "db:migrate": "node scripts/migrate.mjs",
+    "db:reset": "node scripts/init-db.mjs --reset",
+    "admin:create": "node scripts/create-admin.mjs"
   },
   "engines": {
     "node": ">=22.13.0"

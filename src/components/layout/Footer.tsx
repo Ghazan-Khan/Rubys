@@ -1,4 +1,7 @@
+'use client';
+
 import Link from 'next/link';
+import { usePathname } from 'next/navigation';
 import { EnvelopeIcon, MapPinIcon, PhoneIcon } from '@heroicons/react/24/outline';
 import { SITE } from '@/lib/constants';
 import type { Category } from '@/types';
@@ -8,6 +11,11 @@ interface FooterProps {
 }
 
 export default function Footer({ categories = [] }: FooterProps) {
+  const pathname = usePathname();
+
+  // The admin dashboard has its own shell and must not inherit storefront chrome.
+  if (pathname.startsWith('/admin')) return null;
+
   const shopLinks = categories.length
     ? categories.map((category) => ({ label: category.name, href: `/category/${category.slug}` }))
     : [

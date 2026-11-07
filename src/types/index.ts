@@ -39,6 +39,34 @@ export interface Product {
   createdAt: string;
 }
 
+export interface AdminProduct extends Product {
+  deletedAt: string | null;
+  updatedAt: string;
+}
+
+export interface MediaAsset {
+  id: string;
+  url: string;
+  originalName: string;
+  mimeType: string;
+  sizeBytes: number;
+  width: number | null;
+  height: number | null;
+  createdAt: string;
+}
+
+export interface AdminCustomer {
+  id: string;
+  firstName: string;
+  lastName: string;
+  email: string;
+  phone: string;
+  isActive: boolean;
+  createdAt: string;
+  orderCount: number;
+  totalSpent: number;
+}
+
 export interface Review {
   id: string;
   productId: string;

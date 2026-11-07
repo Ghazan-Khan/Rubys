@@ -4,7 +4,7 @@ import { randomUUID } from 'node:crypto';
 
 type Row = Record<string, unknown>;
 
-function mapProduct(row: Row): Product {
+export function mapProduct(row: Row): Product {
   return {
     id: String(row.id),
     name: String(row.name),
@@ -59,7 +59,7 @@ export function getCategories(): Category[] {
   const rows = all<Row>(`
     SELECT c.*, COUNT(p.id) AS product_count
     FROM categories c
-    LEFT JOIN products p ON p.category_id = c.id AND p.is_active = 1
+    LEFT JOIN products p ON p.category_id = c.id AND p.is_active = 1 AND p.deleted_at IS NULL
     WHERE c.is_active = 1
     GROUP BY c.id
     ORDER BY c.sort_order ASC, c.name ASC
@@ -71,7 +71,7 @@ export function getCategoryBySlug(slug: string): Category | null {
   const row = get<Row>(`
     SELECT c.*, COUNT(p.id) AS product_count
     FROM categories c
-    LEFT JOIN products p ON p.category_id = c.id AND p.is_active = 1
+    LEFT JOIN products p ON p.category_id = c.id AND p.is_active = 1 AND p.deleted_at IS NULL
     WHERE c.slug = ? AND c.is_active = 1
     GROUP BY c.id
   `, [slug]);
@@ -92,7 +92,7 @@ export interface ProductFilters {
 }
 
 function buildProductWhere(filters: ProductFilters): { where: string; params: (string | number)[] } {
-  const conditions: string[] = ['p.is_active = 1'];
+  const conditions: string[] = ['p.is_active = 1', 'p.deleted_at IS NULL'];
   const params: (string | number)[] = [];
 
   if (filters.query?.trim()) {
@@ -156,12 +156,12 @@ export function countProducts(filters: ProductFilters = {}): number {
 }
 
 export function getProductBySlug(slug: string): Product | null {
-  const row = get<Row>(`${PRODUCT_SELECT} WHERE p.slug = ? AND p.is_active = 1`, [slug]);
+  const row = get<Row>(`${PRODUCT_SELECT} WHERE p.slug = ? AND p.is_active = 1 AND p.deleted_at IS NULL`, [slug]);
   return row ? mapProduct(row) : null;
 }
 
 export function getProductById(id: string): Product | null {
-  const row = get<Row>(`${PRODUCT_SELECT} WHERE p.id = ? AND p.is_active = 1`, [id]);
+  const row = get<Row>(`${PRODUCT_SELECT} WHERE p.id = ? AND p.is_active = 1 AND p.deleted_at IS NULL`, [id]);
   return row ? mapProduct(row) : null;
 }
 
@@ -176,14 +176,14 @@ export function getNewArrivals(limit = 4): Product[] {
 export function getRelatedProducts(categoryId: string | null, excludeId: string, limit = 4): Product[] {
   if (!categoryId) return getProducts({ limit, sort: 'rating' });
   const rows = all<Row>(
-    `${PRODUCT_SELECT} WHERE p.is_active = 1 AND p.category_id = ? AND p.id != ? ORDER BY p.rating DESC LIMIT ?`,
+    `${PRODUCT_SELECT} WHERE p.is_active = 1 AND p.deleted_at IS NULL AND p.category_id = ? AND p.id != ? ORDER BY p.rating DESC LIMIT ?`,
     [categoryId, excludeId, limit]
   );
   return rows.map(mapProduct);
 }
 
 export function getProductSlugs(): Array<{ slug: string; updatedAt: string }> {
-  const rows = all<Row>('SELECT slug, updated_at FROM products WHERE is_active = 1');
+  const rows = all<Row>('SELECT slug, updated_at FROM products WHERE is_active = 1 AND deleted_at IS NULL');
   return rows.map((row) => ({ slug: String(row.slug), updatedAt: String(row.updated_at) }));
 }
 

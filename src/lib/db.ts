@@ -11,6 +11,31 @@ const databasePath = path.resolve(
 
 const globalForDb = globalThis as unknown as { __rubysDb?: DatabaseSync };
 
+/**
+ * Additive, idempotent migrations for existing databases.
+ * Keeps the admin dashboard deployable without ever resetting data.
+ */
+function applyMigrations(database: DatabaseSync) {
+  const migrationsPath = path.join(process.cwd(), 'database', 'migrations.sql');
+  if (fs.existsSync(migrationsPath)) {
+    database.exec(fs.readFileSync(migrationsPath, 'utf8'));
+  }
+
+  const columns = database
+    .prepare('PRAGMA table_info(products)')
+    .all() as unknown as Array<{ name: string }>;
+
+  if (columns.length === 0) {
+    throw new Error('The products table does not exist. Run `npm run db:init` first.');
+  }
+
+  if (!columns.some((column) => column.name === 'deleted_at')) {
+    database.exec('ALTER TABLE products ADD COLUMN deleted_at TEXT');
+  }
+
+  database.exec('CREATE INDEX IF NOT EXISTS idx_products_deleted ON products(deleted_at)');
+}
+
 function openDatabase(): DatabaseSync {
   fs.mkdirSync(path.dirname(databasePath), { recursive: true });
   const database = new DatabaseSync(databasePath);
@@ -33,6 +58,8 @@ function openDatabase(): DatabaseSync {
       database.exec(fs.readFileSync(seedPath, 'utf8'));
     }
   }
+
+  applyMigrations(database);
 
   return database;
 }

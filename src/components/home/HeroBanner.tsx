@@ -75,6 +75,7 @@ export default function HeroBanner({ products }: HeroBannerProps) {
                   emoji={main.emoji}
                   name={main.name}
                   categoryName={main.categoryName}
+                  imageUrl={main.imageUrl}
                   className="aspect-[4/3] w-full"
                   emojiClassName="text-8xl sm:text-9xl"
                 />
@@ -123,6 +124,7 @@ export default function HeroBanner({ products }: HeroBannerProps) {
                   emoji={product.emoji}
                   name={product.name}
                   categoryName={product.categoryName}
+                  imageUrl={product.imageUrl}
                   compact
                   className="h-14 w-14 shrink-0 rounded-xl"
                 />

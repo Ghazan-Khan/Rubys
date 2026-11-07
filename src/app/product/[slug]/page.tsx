@@ -126,6 +126,7 @@ export default async function ProductPage({ params }: { params: Params }) {
                 emoji={product.emoji}
                 name={product.name}
                 categoryName={product.categoryName}
+                imageUrl={product.imageUrl}
                 className="aspect-square w-full"
                 emojiClassName="text-[9rem] sm:text-[12rem]"
               />

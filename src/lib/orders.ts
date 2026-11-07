@@ -213,7 +213,7 @@ function mapOrderItem(row: Row): OrderItem {
   };
 }
 
-function mapOrder(row: Row, items: OrderItem[] = []): Order {
+export function mapOrder(row: Row, items: OrderItem[] = []): Order {
   return {
     id: String(row.id),
     orderNumber: String(row.order_number),

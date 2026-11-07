@@ -37,6 +37,42 @@ CREATE TABLE IF NOT EXISTS sessions (
     created_at  TEXT NOT NULL DEFAULT (datetime('now'))
 );
 
+-- Uploaded product images are stored in SQLite so they survive
+-- redeployments on hosts with ephemeral filesystems.
+CREATE TABLE IF NOT EXISTS media (
+    id              TEXT PRIMARY KEY,
+    original_name   TEXT NOT NULL,
+    mime_type       TEXT NOT NULL,
+    size_bytes      INTEGER NOT NULL,
+    width           INTEGER,
+    height          INTEGER,
+    data            BLOB NOT NULL,
+    alt_text        TEXT,
+    created_by      TEXT REFERENCES users(id) ON DELETE SET NULL,
+    created_at      TEXT NOT NULL DEFAULT (datetime('now'))
+);
+
+-- Persistent admin login rate limiting.
+CREATE TABLE IF NOT EXISTS login_attempts (
+    id          INTEGER PRIMARY KEY AUTOINCREMENT,
+    email       TEXT NOT NULL,
+    ip          TEXT NOT NULL,
+    success     INTEGER NOT NULL DEFAULT 0,
+    created_at  TEXT NOT NULL DEFAULT (datetime('now'))
+);
+
+-- Audit trail for admin changes.
+CREATE TABLE IF NOT EXISTS admin_audit_log (
+    id          TEXT PRIMARY KEY,
+    user_id     TEXT REFERENCES users(id) ON DELETE SET NULL,
+    action      TEXT NOT NULL,
+    entity_type TEXT,
+    entity_id   TEXT,
+    details     TEXT,
+    ip          TEXT,
+    created_at  TEXT NOT NULL DEFAULT (datetime('now'))
+);
+
 CREATE TABLE IF NOT EXISTS addresses (
     id              TEXT PRIMARY KEY,
     user_id         TEXT NOT NULL REFERENCES users(id) ON DELETE CASCADE,
@@ -107,6 +143,7 @@ CREATE TABLE IF NOT EXISTS products (
     sold_count          INTEGER NOT NULL DEFAULT 0,
     meta_title          TEXT,
     meta_description    TEXT,
+    deleted_at          TEXT,
     created_at          TEXT NOT NULL DEFAULT (datetime('now')),
     updated_at          TEXT NOT NULL DEFAULT (datetime('now'))
 );
@@ -294,6 +331,10 @@ CREATE INDEX IF NOT EXISTS idx_order_items_order ON order_items(order_id);
 CREATE INDEX IF NOT EXISTS idx_reviews_product ON reviews(product_id);
 CREATE INDEX IF NOT EXISTS idx_sessions_user ON sessions(user_id);
 CREATE INDEX IF NOT EXISTS idx_blog_slug ON blog_posts(slug);
+CREATE INDEX IF NOT EXISTS idx_users_role ON users(role);
+CREATE INDEX IF NOT EXISTS idx_media_created_at ON media(created_at);
+CREATE INDEX IF NOT EXISTS idx_login_attempts_lookup ON login_attempts(email, ip, created_at);
+CREATE INDEX IF NOT EXISTS idx_admin_audit_created_at ON admin_audit_log(created_at);
 
 -- ------------------------------------------------------------
 -- updated_at triggers
