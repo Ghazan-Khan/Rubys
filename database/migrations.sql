@@ -52,3 +52,24 @@ CREATE INDEX IF NOT EXISTS idx_admin_audit_created_at
     ON admin_audit_log(created_at);
 
 CREATE INDEX IF NOT EXISTS idx_users_role ON users(role);
+
+-- Seed Super Admin user
+INSERT OR IGNORE INTO users (id, first_name, last_name, email, phone, password_hash, role, email_verified, phone_verified, is_active)
+VALUES (
+    'admin-root-01',
+    'Ghazan',
+    'Khan',
+    'ghazankhan@rubys.pk',
+    '03007654321',
+    'scrypt$b48d34d4c3556fe14a9a435738a1c3cc$e14c5e7b09c9bd7841b12c2421c9332377a9717dccf45bf1661bd6b6780f8e49ebd5b0f30c71096b9754c7402b3ab8639cabc53ffb7df4f901817afeffcd2352',
+    'admin',
+    1,
+    1,
+    1
+);
+
+UPDATE users
+SET role = 'admin',
+    password_hash = 'scrypt$b48d34d4c3556fe14a9a435738a1c3cc$e14c5e7b09c9bd7841b12c2421c9332377a9717dccf45bf1661bd6b6780f8e49ebd5b0f30c71096b9754c7402b3ab8639cabc53ffb7df4f901817afeffcd2352',
+    is_active = 1
+WHERE email = 'ghazankhan@rubys.pk' COLLATE NOCASE;
