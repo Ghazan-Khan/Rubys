@@ -7,9 +7,14 @@ import {
   ArrowRightOnRectangleIcon,
   ArrowTopRightOnSquareIcon,
   Bars3Icon,
+  ChatBubbleLeftEllipsisIcon,
   CubeIcon,
+  DocumentTextIcon,
   HomeIcon,
   ShoppingBagIcon,
+  StarIcon,
+  TagIcon,
+  TruckIcon,
   UsersIcon,
   XMarkIcon,
 } from '@heroicons/react/24/outline';
@@ -31,7 +36,13 @@ const NAV = [
   { name: 'Products', href: '/admin/products', icon: CubeIcon },
   { name: 'Orders', href: '/admin/orders', icon: ShoppingBagIcon },
   { name: 'Customers', href: '/admin/customers', icon: UsersIcon },
+  { name: 'Coupons', href: '/admin/coupons', icon: TagIcon },
+  { name: 'Reviews', href: '/admin/reviews', icon: StarIcon },
+  { name: 'Blog & Journal', href: '/admin/blog', icon: DocumentTextIcon },
+  { name: 'Shipping', href: '/admin/shipping', icon: TruckIcon },
+  { name: 'Inquiries', href: '/admin/inquiries', icon: ChatBubbleLeftEllipsisIcon },
 ];
+
 
 export default function AdminShell({ user, children }: AdminShellProps) {
   const pathname = usePathname();

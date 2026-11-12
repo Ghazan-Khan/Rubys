@@ -92,6 +92,9 @@ export interface BlogPost {
   publishedAt: string | null;
   views: number;
   createdAt: string;
+  metaTitle?: string | null;
+  metaDescription?: string | null;
+  updatedAt?: string;
 }
 
 export interface User {
@@ -181,6 +184,17 @@ export interface Coupon {
   value: number;
   minOrderAmount: number;
   maxDiscountAmount: number | null;
+}
+
+export interface AdminCoupon extends Coupon {
+  id: string;
+  usageLimit: number | null;
+  usedCount: number;
+  startsAt: string | null;
+  expiresAt: string | null;
+  isActive: boolean;
+  createdAt: string;
+  updatedAt: string;
 }
 
 export interface CartItem {
