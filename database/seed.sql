@@ -4,13 +4,19 @@
 -- ============================================================
 
 -- Categories -------------------------------------------------
-INSERT OR IGNORE INTO categories (id, name, slug, description, emoji, banner_text, sort_order, meta_title, meta_description) VALUES
-('cat-clothing-fashion', 'Clothing & Fashion', 'clothing-fashion', 'Pret, luxury lawn, festive wear, kurtis, dresses, abayas & modest fashion for her.', '👗', 'Wear it with grace & confidence', 1, 'Women''s Clothing & Fashion Online in Pakistan', 'Shop ladies dresses, lawn suits, pret wear and abayas with nationwide COD from Ruby''s.pk.'),
-('cat-beauty-skincare', 'Beauty & Skincare', 'beauty-skincare', 'Glow serums, hydrating creams, natural oils, luxury makeup & signature fragrances.', '💄', 'Radiate confidence & timeless glow', 2, 'Women''s Beauty & Skincare Products Online', 'Discover premium skincare, serums, lipsticks and halal fragrances at Ruby''s.pk.'),
-('cat-bags-accessories', 'Bags & Accessories', 'bags-accessories', 'Designer handbags, crossbody bags, evening clutches, silk scarves & belts.', '👜', 'Sophistication in every detail', 3, 'Women''s Handbags & Accessories in Pakistan', 'Explore luxury totes, crossbody bags, clutches and silk scarves with fast delivery across Pakistan.'),
-('cat-jewellery-watches', 'Jewellery & Watches', 'jewellery-watches', 'Rose gold mesh watches, pearl necklaces, zircon studs, bridal sets & bangles.', '✨', 'Sparkle for every special moment', 4, 'Women''s Jewellery & Watches in Pakistan', 'Shop exquisite watches, necklaces, earrings and jewellery pieces with cash on delivery.'),
-('cat-shoes-footwear', 'Shoes & Footwear', 'shoes-footwear', 'Handcrafted khussas, comfortable block heels, elegant sandals & everyday flats.', '👠', 'Step out in comfort & elegance', 5, 'Women''s Shoes & Footwear Online', 'Find handcrafted khussas, heels, mules and flats crafted for all-day comfort.'),
-('cat-lifestyle-personal', 'Lifestyle & Personal Care', 'lifestyle-personal-care', 'Aroma diffusers, sleep mists, silk pillowcases, jade rollers & wellness kits.', '🌸', 'Curated self-care & mindful living', 6, 'Women''s Lifestyle & Personal Care in Pakistan', 'Indulge in gentle self-care, sleep mists, aromatherapy and wellness essentials.');
+INSERT OR IGNORE INTO categories (id, name, slug, description, emoji, banner_text, is_active, sort_order, meta_title, meta_description) VALUES
+('cat-clothing-fashion', 'Clothing & Fashion', 'clothing-fashion', 'Pret, luxury lawn, festive wear, kurtis, dresses, abayas & modest fashion for her.', '👗', 'Wear it with grace & confidence', 1, 1, 'Women''s Clothing & Fashion Online in Pakistan', 'Shop ladies dresses, lawn suits, pret wear and abayas with nationwide COD from Ruby''s.pk.'),
+('cat-beauty-skincare', 'Beauty & Skincare', 'beauty-skincare', 'Glow serums, hydrating creams, natural oils, luxury makeup & signature fragrances.', '💄', 'Radiate confidence & timeless glow', 1, 2, 'Women''s Beauty & Skincare Products Online', 'Discover premium skincare, serums, lipsticks and halal fragrances at Ruby''s.pk.'),
+('cat-bags-accessories', 'Bags & Accessories', 'bags-accessories', 'Designer handbags, crossbody bags, evening clutches, silk scarves & belts.', '👜', 'Sophistication in every detail', 1, 3, 'Women''s Handbags & Accessories in Pakistan', 'Explore luxury totes, crossbody bags, clutches and silk scarves with fast delivery across Pakistan.'),
+('cat-jewellery-watches', 'Jewellery & Watches', 'jewellery-watches', 'Rose gold mesh watches, pearl necklaces, zircon studs, bridal sets & bangles.', '✨', 'Sparkle for every special moment', 1, 4, 'Women''s Jewellery & Watches in Pakistan', 'Shop exquisite watches, necklaces, earrings and jewellery pieces with cash on delivery.'),
+('cat-shoes-footwear', 'Shoes & Footwear', 'shoes-footwear', 'Handcrafted khussas, comfortable block heels, elegant sandals & everyday flats.', '👠', 'Step out in comfort & elegance', 1, 5, 'Women''s Shoes & Footwear Online', 'Find handcrafted khussas, heels, mules and flats crafted for all-day comfort.'),
+('cat-lifestyle-personal', 'Lifestyle & Personal Care', 'lifestyle-personal-care', 'Aroma diffusers, sleep mists, silk pillowcases, jade rollers & wellness kits.', '🌸', 'Curated self-care & mindful living', 1, 6, 'Women''s Lifestyle & Personal Care in Pakistan', 'Indulge in gentle self-care, sleep mists, aromatherapy and wellness essentials.'),
+('cat-fashion', 'Fashion & Clothing (Archived)', 'fashion-clothing-legacy', 'Archived', '👗', NULL, 0, 99, NULL, NULL),
+('cat-electronics', 'Electronics (Archived)', 'electronics-legacy', 'Archived', '🎧', NULL, 0, 99, NULL, NULL),
+('cat-home-living', 'Home & Living (Archived)', 'home-living-legacy', 'Archived', '🏠', NULL, 0, 99, NULL, NULL),
+('cat-beauty-health', 'Beauty & Health (Archived)', 'beauty-health-legacy', 'Archived', '💄', NULL, 0, 99, NULL, NULL),
+('cat-sports-fitness', 'Sports & Fitness (Archived)', 'sports-fitness-legacy', 'Archived', '⚽', NULL, 0, 99, NULL, NULL),
+('cat-books-stationery', 'Books & Stationery (Archived)', 'books-stationery-legacy', 'Archived', '📚', NULL, 0, 99, NULL, NULL);
 
 -- Brands -----------------------------------------------------
 INSERT OR IGNORE INTO brands (id, name, slug, description) VALUES

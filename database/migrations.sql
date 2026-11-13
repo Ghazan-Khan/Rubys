@@ -78,6 +78,15 @@ WHERE email = 'ghazankhan@rubys.pk' COLLATE NOCASE;
 -- Women's Boutique Transformation: 6 Curated Departments
 -- ============================================================
 
+-- Ensure legacy categories exist so foreign keys never fail
+INSERT OR IGNORE INTO categories (id, name, slug, description, emoji, banner_text, is_active, sort_order) VALUES
+('cat-fashion', 'Fashion & Clothing (Archived)', 'fashion-clothing-legacy', 'Archived', '👗', NULL, 0, 99),
+('cat-electronics', 'Electronics (Archived)', 'electronics-legacy', 'Archived', '🎧', NULL, 0, 99),
+('cat-home-living', 'Home & Living (Archived)', 'home-living-legacy', 'Archived', '🏠', NULL, 0, 99),
+('cat-beauty-health', 'Beauty & Health (Archived)', 'beauty-health-legacy', 'Archived', '💄', NULL, 0, 99),
+('cat-sports-fitness', 'Sports & Fitness (Archived)', 'sports-fitness-legacy', 'Archived', '⚽', NULL, 0, 99),
+('cat-books-stationery', 'Books & Stationery (Archived)', 'books-stationery-legacy', 'Archived', '📚', NULL, 0, 99);
+
 INSERT OR REPLACE INTO categories (id, name, slug, description, emoji, banner_text, is_active, sort_order, meta_title, meta_description) VALUES
 ('cat-clothing-fashion', 'Clothing & Fashion', 'clothing-fashion', 'Pret, luxury lawn, festive wear, kurtis, dresses, abayas & modest fashion for her.', '👗', 'Wear it with grace & confidence', 1, 1, 'Women''s Clothing & Fashion Online in Pakistan', 'Shop ladies dresses, lawn suits, pret wear and abayas with nationwide COD from Ruby''s.pk.'),
 ('cat-beauty-skincare', 'Beauty & Skincare', 'beauty-skincare', 'Glow serums, hydrating creams, natural oils, luxury makeup & signature fragrances.', '💄', 'Radiate confidence & timeless glow', 1, 2, 'Women''s Beauty & Skincare Products Online', 'Discover premium skincare, serums, lipsticks and halal fragrances at Ruby''s.pk.'),

@@ -18,7 +18,9 @@ const globalForDb = globalThis as unknown as { __rubysDb?: DatabaseSync };
 function applyMigrations(database: DatabaseSync) {
   const migrationsPath = path.join(process.cwd(), 'database', 'migrations.sql');
   if (fs.existsSync(migrationsPath)) {
+    database.exec('PRAGMA foreign_keys = OFF;');
     database.exec(fs.readFileSync(migrationsPath, 'utf8'));
+    database.exec('PRAGMA foreign_keys = ON;');
   }
 
   const columns = database
@@ -51,12 +53,14 @@ function openDatabase(): DatabaseSync {
   if (!hasSchema) {
     const schemaPath = path.join(process.cwd(), 'database.sql');
     const seedPath = path.join(process.cwd(), 'database', 'seed.sql');
+    database.exec('PRAGMA foreign_keys = OFF;');
     if (fs.existsSync(schemaPath)) {
       database.exec(fs.readFileSync(schemaPath, 'utf8'));
     }
     if (fs.existsSync(seedPath)) {
       database.exec(fs.readFileSync(seedPath, 'utf8'));
     }
+    database.exec('PRAGMA foreign_keys = ON;');
   }
 
   applyMigrations(database);
