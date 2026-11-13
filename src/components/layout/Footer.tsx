@@ -19,12 +19,12 @@ export default function Footer({ categories = [] }: FooterProps) {
   const shopLinks = categories.length
     ? categories.map((category) => ({ label: category.name, href: `/category/${category.slug}` }))
     : [
-        { label: 'Fashion & Clothing', href: '/category/fashion-clothing' },
-        { label: 'Electronics', href: '/category/electronics' },
-        { label: 'Home & Living', href: '/category/home-living' },
-        { label: 'Beauty & Health', href: '/category/beauty-health' },
-        { label: 'Sports & Fitness', href: '/category/sports-fitness' },
-        { label: 'Books & Stationery', href: '/category/books-stationery' },
+        { label: 'Clothing & Fashion', href: '/category/clothing-fashion' },
+        { label: 'Beauty & Skincare', href: '/category/beauty-skincare' },
+        { label: 'Bags & Accessories', href: '/category/bags-accessories' },
+        { label: 'Jewellery & Watches', href: '/category/jewellery-watches' },
+        { label: 'Shoes & Footwear', href: '/category/shoes-footwear' },
+        { label: 'Lifestyle & Personal Care', href: '/category/lifestyle-personal-care' },
       ];
 
   const helpLinks = [

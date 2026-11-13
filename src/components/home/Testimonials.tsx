@@ -5,22 +5,22 @@ const TESTIMONIALS = [
     name: 'Ayesha K.',
     city: 'Peshawar',
     quote:
-      'Ordered on Monday and it arrived on Wednesday. The packaging was neat and the quality was exactly what I expected. COD made it stress-free.',
-    product: 'Classic Cotton Crew T-Shirt',
+      'Ordered the 3-piece embroidered lawn suit on Monday and it arrived on Wednesday. The embroidery is exquisite and fabric is so soft. COD made it stress-free.',
+    product: 'Embroidered Lawn 3-Piece Stitched Suit',
   },
   {
-    name: 'Bilal A.',
+    name: 'Zainab M.',
     city: 'Islamabad',
     quote:
-      'I was hesitant to order electronics online, but the earbuds were genuine and the team answered my questions on WhatsApp before I paid.',
-    product: 'Noise-Cancelling Earbuds',
+      'The Rose Gold Mesh Watch is stunning! It looks even more luxurious in person than on the site. Perfect gift for my sister and prompt WhatsApp support.',
+    product: 'Rose Gold Minimalist Mesh Watch',
   },
   {
     name: 'Fatima N.',
-    city: 'Mardan',
+    city: 'Lahore',
     quote:
-      'The mugs are even prettier in person. Customer support helped me change my delivery address after checkout. Really thoughtful service.',
-    product: 'Ceramic Coffee Mug Set',
+      'The 24K Saffron Glow Oil and Velvet Lip Tint are holy grails now! My skin looks radiant and dewy without being sticky. Highly recommended!',
+    product: '24K Gold & Saffron Radiance Facial Oil',
   },
 ];
 

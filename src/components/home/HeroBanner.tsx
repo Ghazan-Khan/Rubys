@@ -20,17 +20,17 @@ export default function HeroBanner({ products }: HeroBannerProps) {
         <div className="animation-fade-up">
           <div className="inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/10 px-3 py-1.5 text-[11px] font-semibold uppercase tracking-wider text-ruby-100 backdrop-blur">
             <span className="h-1.5 w-1.5 rounded-full bg-emerald-400" />
-            Delivering across Pakistan · KPK priority
+            Curated For Women & Ladies · KPK Priority
           </div>
 
           <h1 className="mt-5 max-w-2xl text-4xl font-extrabold leading-[1.08] tracking-tight sm:text-5xl lg:text-6xl">
-            Everyday quality.
-            <span className="block text-ruby-200">Delivered to your door.</span>
+            Curated elegance.
+            <span className="block text-ruby-200">Designed for her.</span>
           </h1>
 
           <p className="mt-5 max-w-xl text-sm leading-7 text-ruby-100/90 sm:text-base">
-            Carefully selected fashion, electronics, home and beauty essentials at honest prices.
-            Cash on Delivery, easy returns and fast dispatch from Peshawar.
+            Pakistan&apos;s boutique for women&apos;s fashion, radiant skincare, luxury handbags, jewellery, and chic footwear.
+            Cash on Delivery, easy exchanges and fast dispatch from Peshawar.
           </p>
 
           <div className="mt-7 flex flex-col gap-3 sm:flex-row">

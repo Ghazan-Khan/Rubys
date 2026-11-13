@@ -3,12 +3,14 @@ import { ArrowUpRightIcon } from '@heroicons/react/24/outline';
 import type { Category } from '@/types';
 
 const GRADIENTS: Record<string, string> = {
+  'cat-clothing-fashion': 'from-rose-50 to-pink-100',
+  'cat-beauty-skincare': 'from-fuchsia-50 to-rose-100',
+  'cat-bags-accessories': 'from-amber-50 to-orange-100',
+  'cat-jewellery-watches': 'from-yellow-50 to-amber-100',
+  'cat-shoes-footwear': 'from-purple-50 to-pink-100',
+  'cat-lifestyle-personal': 'from-emerald-50 to-teal-100',
   'cat-fashion': 'from-rose-50 to-pink-100',
-  'cat-electronics': 'from-sky-50 to-cyan-100',
-  'cat-home-living': 'from-amber-50 to-orange-100',
   'cat-beauty-health': 'from-fuchsia-50 to-rose-100',
-  'cat-sports-fitness': 'from-emerald-50 to-teal-100',
-  'cat-books-stationery': 'from-violet-50 to-indigo-100',
 };
 
 export default function FeaturedCategories({ categories }: { categories: Category[] }) {
@@ -19,12 +21,12 @@ export default function FeaturedCategories({ categories }: { categories: Categor
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="mb-8 flex flex-wrap items-end justify-between gap-4">
           <div>
-            <p className="text-[11px] font-bold uppercase tracking-[0.22em] text-ruby-600">Browse the store</p>
+            <p className="text-[11px] font-bold uppercase tracking-[0.22em] text-ruby-600">Curated For Her</p>
             <h2 className="mt-2 text-2xl font-extrabold tracking-tight text-charcoal-900 sm:text-3xl">
               Shop by category
             </h2>
             <p className="mt-2 max-w-xl text-sm text-charcoal-500">
-              Six carefully curated departments, with new pieces added every week.
+              Six curated departments designed for women, ladies and girls — with new arrivals every week.
             </p>
           </div>
           <Link href="/shop" className="btn-secondary text-sm">

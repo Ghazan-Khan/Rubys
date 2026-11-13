@@ -9,8 +9,8 @@ interface BlogManagerProps {
   initialPosts: AdminBlogPost[];
 }
 
-const CATEGORIES = ['Buying Guides', 'Fitness', 'Beauty', 'Fashion', 'Technology', 'Lifestyle', 'News'];
-const EMOJIS = ['📝', '🛍️', '✨', '💄', '👗', '🎧', '🏋️', '🧴', '📚', '🏠', '⭐', '🔥'];
+const CATEGORIES = ['Clothing & Fashion', 'Beauty & Skincare', 'Bags & Accessories', 'Jewellery & Watches', 'Shoes & Footwear', 'Lifestyle & Personal Care', 'Buying Guides'];
+const EMOJIS = ['👗', '💄', '👜', '✨', '👠', '🌸', '🧴', '🎀', '💎', '💅', '🛍️', '📝'];
 
 export default function BlogManager({ initialPosts }: BlogManagerProps) {
   const [posts, setPosts] = useState<AdminBlogPost[]>(initialPosts);

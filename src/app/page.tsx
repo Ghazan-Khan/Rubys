@@ -10,9 +10,9 @@ import Newsletter from '@/components/home/Newsletter';
 import { getBlogPosts, getCategories, getFeaturedProducts, getNewArrivals } from '@/lib/products';
 
 export const metadata: Metadata = {
-  title: "Ruby's.pk - Premium Online Shopping in Pakistan",
+  title: "Ruby's.pk - Women's Fashion, Beauty, Bags, Jewellery & Footwear",
   description:
-    "Shop quality fashion, electronics, home, beauty and fitness products at Ruby's.pk. Fast delivery across Pakistan with a special focus on Khyber Pakhtunkhwa. Cash on Delivery available.",
+    "Shop curated women's fashion, skincare, luxury bags, designer jewellery, watches and footwear at Ruby's.pk. Fast delivery across Pakistan with Cash on Delivery.",
   alternates: { canonical: '/' },
 };
 

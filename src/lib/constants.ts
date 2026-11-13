@@ -2,7 +2,7 @@ import type { PaymentMethod, ShippingZone, OrderStatus } from '@/types';
 
 export const SITE = {
   name: "Ruby's.pk",
-  tagline: 'Premium Online Shopping in Pakistan',
+  tagline: "Women's Fashion, Beauty & Lifestyle Boutique in Pakistan",
   url: process.env.NEXT_PUBLIC_SITE_URL || 'https://rubys.pk',
   email: 'support@rubys.pk',
   phone: '+92 300 000 0000',

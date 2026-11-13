@@ -19,19 +19,20 @@ export const viewport: Viewport = {
 export const metadata: Metadata = {
   metadataBase: new URL(SITE.url),
   title: {
-    default: "Ruby's.pk - Premium Online Shopping in Pakistan | KPK & Nationwide Delivery",
+    default: "Ruby's.pk - Women's Fashion, Beauty, Jewellery & Lifestyle | Pakistan",
     template: "%s | Ruby's.pk",
   },
   description:
-    "Shop quality fashion, electronics, home, beauty and fitness products at Ruby's.pk. Fast delivery across Pakistan, especially Khyber Pakhtunkhwa. Cash on Delivery available.",
+    "Discover curated women's fashion, radiant skincare, luxury handbags, jewellery, watches and footwear at Ruby's.pk. Cash on Delivery across Pakistan.",
   keywords: [
-    'online shopping pakistan',
-    "ruby's pakistan",
-    'kpk online shopping',
-    'peshawar online shopping',
+    'womens shopping pakistan',
+    'ladies fashion pakistan',
+    'women clothing online pakistan',
+    'skincare and beauty pakistan',
+    'jewellery and watches pakistan',
+    'ladies bags and shoes pakistan',
+    "ruby's pk",
     'cash on delivery pakistan',
-    'pakistan ecommerce',
-    'buy online peshawar',
   ],
   authors: [{ name: "Ruby's.pk" }],
   creator: "Ruby's.pk",
