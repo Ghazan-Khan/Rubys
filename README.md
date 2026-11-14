@@ -13,7 +13,7 @@ A complete, production-shaped e-commerce storefront for **Ruby's.pk** — a Paki
 - **Content** — buying guides (blog), about, contact, FAQ and full policy pages
 - **SEO** — metadata, canonical URLs, sitemap, robots, Open Graph, structured data
 - **Admin dashboard** — secure staff login, dashboard totals, product CRUD with image upload, order and customer views
-- **Database** — SQLite schema + seed data with 26 products, 6 categories, coupons, reviews, blog posts and a demo account
+- **Database** — SQLite schema + seed data with a full catalogue of 98 products, coupons, reviews, blog posts and a demo account
 
 ## Requirements
 
@@ -96,7 +96,7 @@ Admin accounts are not configured through the app. Use `npm run admin:create`; f
 
 ## Database
 
-The schema lives in [`database.sql`](database.sql) and sample data in [`database/seed.sql`](database/seed.sql). Both are executed by [`scripts/init-db.mjs`](scripts/init-db.mjs).
+The schema lives in [`database.sql`](database.sql) and sample data in [`database/seed.sql`](database/seed.sql). Both are executed by [`scripts/init-db.mjs`](scripts/init-db.mjs). Product imports live in their own files — currently [`database/beauty-skincare-catalog.sql`](database/beauty-skincare-catalog.sql), the supplier's 50-product Beauty & Skincare catalogue — which [`scripts/migrate-lib.mjs`](scripts/migrate-lib.mjs) applies after the admin migrations.
 
 Tables include users, sessions, addresses, categories, brands, products, product images/attributes, coupons, reviews, wishlist, orders, order items, newsletter subscribers, contact messages, shipping zones and blog posts. The admin dashboard adds four additive tables:
 
@@ -105,7 +105,7 @@ Tables include users, sessions, addresses, categories, brands, products, product
 - `admin_audit_log` — an audit trail of admin product and media changes
 - `products.deleted_at` — soft-delete marker so deleting a product never breaks existing order history
 
-Apply admin migrations with `npm run db:migrate`. The same migrations run automatically every time the app opens an existing database, and they are idempotent. `db:migrate` never drops tables or resets data.
+Apply admin migrations with `npm run db:migrate`. The same migrations run automatically every time the app opens an existing database, and they are idempotent. `db:migrate` never drops tables or resets data. Catalogue imports such as `database/beauty-skincare-catalog.sql` are applied by the same script using `INSERT OR IGNORE`, so re-running it never duplicates products or gallery images.
 
 Prices are stored as **integer PKR**. The app uses Node's built-in `node:sqlite` driver through [`src/lib/db.ts`](src/lib/db.ts), so there is no native dependency to compile.
 
@@ -128,6 +128,7 @@ src/
 database.sql           SQLite schema
 database/migrations.sql Additive admin migrations
 database/seed.sql      Seed data
+database/beauty-skincare-catalog.sql  Imported Beauty & Skincare catalogue
 scripts/init-db.mjs    Database bootstrap script
 scripts/migrate.mjs    Apply admin migrations to an existing database
 scripts/create-admin.mjs Create an administrator securely

@@ -36,6 +36,15 @@ function applyMigrations(database: DatabaseSync) {
   }
 
   database.exec('CREATE INDEX IF NOT EXISTS idx_products_deleted ON products(deleted_at)');
+
+  // Curated catalogue imports. Idempotent (INSERT OR IGNORE), so applying them
+  // on every start never duplicates products or gallery images.
+  for (const file of ['beauty-skincare-catalog.sql']) {
+    const catalogPath = path.join(process.cwd(), 'database', file);
+    if (fs.existsSync(catalogPath)) {
+      database.exec(fs.readFileSync(catalogPath, 'utf8'));
+    }
+  }
 }
 
 function openDatabase(): DatabaseSync {

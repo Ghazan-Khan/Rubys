@@ -26,4 +26,16 @@ export function runMigrations(db, { log = () => {} } = {}) {
   }
 
   db.exec('CREATE INDEX IF NOT EXISTS idx_products_deleted ON products(deleted_at)');
+
+  // Curated catalogue imports. Every file is idempotent (INSERT OR IGNORE),
+  // so re-applying them on each migration never duplicates rows.
+  const catalogFiles = ['beauty-skincare-catalog.sql'];
+
+  for (const file of catalogFiles) {
+    const catalogPath = path.join(root, 'database', file);
+
+    if (fs.existsSync(catalogPath)) {
+      db.exec(fs.readFileSync(catalogPath, 'utf8'));
+    }
+  }
 }

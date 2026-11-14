@@ -4,6 +4,12 @@ import { useEffect, useState } from 'react';
 import { cn } from '@/lib/format';
 
 const PALETTES: Record<string, string> = {
+  'Clothing & Fashion': 'from-rose-100 via-pink-50 to-red-100',
+  'Beauty & Skincare': 'from-fuchsia-100 via-pink-50 to-rose-100',
+  'Bags & Accessories': 'from-amber-100 via-yellow-50 to-orange-100',
+  'Jewellery & Watches': 'from-yellow-100 via-amber-50 to-lime-100',
+  'Shoes & Footwear': 'from-stone-100 via-neutral-50 to-amber-100',
+  'Lifestyle & Personal': 'from-teal-100 via-emerald-50 to-cyan-100',
   'Fashion & Clothing': 'from-rose-100 via-pink-50 to-red-100',
   Electronics: 'from-sky-100 via-cyan-50 to-blue-100',
   'Home & Living': 'from-amber-100 via-orange-50 to-yellow-100',
@@ -13,6 +19,12 @@ const PALETTES: Record<string, string> = {
 };
 
 const ACCENTS: Record<string, string> = {
+  'Clothing & Fashion': 'bg-rose-200/50',
+  'Beauty & Skincare': 'bg-fuchsia-200/50',
+  'Bags & Accessories': 'bg-amber-200/50',
+  'Jewellery & Watches': 'bg-yellow-200/50',
+  'Shoes & Footwear': 'bg-stone-200/50',
+  'Lifestyle & Personal': 'bg-teal-200/50',
   'Fashion & Clothing': 'bg-rose-200/50',
   Electronics: 'bg-sky-200/50',
   'Home & Living': 'bg-amber-200/50',
