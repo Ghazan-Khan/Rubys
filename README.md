@@ -240,11 +240,28 @@ Hostinger's Node.js hosting runs the app with a persistent filesystem, so the SQ
 5. **Start the app** with the Node.js app's start command (typically `npm run start`). Hostinger terminates TLS and proxies requests, so the app sets `secure` cookies automatically when `NODE_ENV=production`.
 
 6. **Verify**:
-   - `https://your-domain.com/` — storefront loads with the existing 26 products
+   - `https://your-domain.com/` — storefront loads with the full catalogue, including the 50 imported Beauty & Skincare products
+   - `https://your-domain.com/category/beauty-skincare` — shows the imported products
    - `https://your-domain.com/admin/login` — admin sign-in works
    - a customer account cannot open `/admin`
    - upload a product image and confirm it still loads after a redeploy
    - `https://your-domain.com/robots.txt` disallows `/admin`
+
+### Updating an existing deployment
+
+Pull the latest `main` and rebuild from the application root. `db:migrate` also
+applies any new catalogue import files in `database/`, so new products appear
+without touching the database by hand.
+
+```bash
+git pull origin main
+npm ci
+npm run db:migrate
+npm run build
+```
+
+Restart the Node.js app from hPanel afterwards (or `touch tmp/restart.txt` when
+the app runs under Passenger).
 
 ### Database safety
 
