@@ -37,12 +37,28 @@ function applyMigrations(database: DatabaseSync) {
 
   database.exec('CREATE INDEX IF NOT EXISTS idx_products_deleted ON products(deleted_at)');
 
-  // Curated catalogue imports. Idempotent (INSERT OR IGNORE), so applying them
-  // on every start never duplicates products or gallery images.
+  // Curated catalogue imports. Each file records itself in `applied_imports`
+  // when it runs, so later opens stay read-only and cannot contend for the
+  // SQLite write lock (important when Next.js build workers open the DB).
+  const appliedStatement = database
+    .prepare("SELECT 1 AS ok FROM sqlite_master WHERE type = 'table' AND name = 'applied_imports'")
+    .get()
+    ? database.prepare('SELECT 1 AS ok FROM applied_imports WHERE name = ?')
+    : null;
+
   for (const file of ['beauty-skincare-catalog.sql']) {
+    if (appliedStatement?.get(file)) continue;
+
     const catalogPath = path.join(process.cwd(), 'database', file);
-    if (fs.existsSync(catalogPath)) {
+    if (!fs.existsSync(catalogPath)) continue;
+
+    database.exec('BEGIN IMMEDIATE;');
+    try {
       database.exec(fs.readFileSync(catalogPath, 'utf8'));
+      database.exec('COMMIT;');
+    } catch (error) {
+      database.exec('ROLLBACK;');
+      throw error;
     }
   }
 }

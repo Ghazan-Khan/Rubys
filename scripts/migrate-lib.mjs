@@ -4,6 +4,17 @@ import { fileURLToPath } from 'node:url';
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 
+/** True when a catalogue import has already been applied to this database. */
+function isImportApplied(db, file) {
+  const table = db
+    .prepare("SELECT 1 AS ok FROM sqlite_master WHERE type = 'table' AND name = 'applied_imports'")
+    .get();
+
+  if (!table) return false;
+
+  return Boolean(db.prepare('SELECT 1 AS ok FROM applied_imports WHERE name = ?').get(file));
+}
+
 /**
  * Apply the additive admin migrations to an open SQLite database.
  * Safe to run repeatedly; never drops tables or data.
@@ -27,15 +38,24 @@ export function runMigrations(db, { log = () => {} } = {}) {
 
   db.exec('CREATE INDEX IF NOT EXISTS idx_products_deleted ON products(deleted_at)');
 
-  // Curated catalogue imports. Every file is idempotent (INSERT OR IGNORE),
-  // so re-applying them on each migration never duplicates rows.
+  // Curated catalogue imports. Each file records itself in `applied_imports`
+  // when it runs, so later starts stay read-only and cannot contend for the
+  // SQLite write lock (important when Next.js build workers open the DB).
   const catalogFiles = ['beauty-skincare-catalog.sql'];
 
   for (const file of catalogFiles) {
-    const catalogPath = path.join(root, 'database', file);
+    if (isImportApplied(db, file)) continue;
 
-    if (fs.existsSync(catalogPath)) {
+    const catalogPath = path.join(root, 'database', file);
+    if (!fs.existsSync(catalogPath)) continue;
+
+    db.exec('BEGIN IMMEDIATE;');
+    try {
       db.exec(fs.readFileSync(catalogPath, 'utf8'));
+      db.exec('COMMIT;');
+    } catch (error) {
+      db.exec('ROLLBACK;');
+      throw error;
     }
   }
 }

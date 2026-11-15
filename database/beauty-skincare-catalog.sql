@@ -5,8 +5,15 @@
 -- Skincare" export, filed under the Beauty & Skincare department.
 --
 -- This file is idempotent: it can be run on a fresh database or
--- re-applied to an existing one without creating duplicates.
+-- re-applied to an existing one without creating duplicates. It also
+-- records itself in `applied_imports`, so the app skips the whole file
+-- once it has run instead of writing to the database on every start.
 -- ============================================================
+
+CREATE TABLE IF NOT EXISTS applied_imports (
+    name        TEXT PRIMARY KEY,
+    applied_at  TEXT NOT NULL DEFAULT (datetime('now'))
+);
 
 INSERT OR IGNORE INTO categories (id, name, slug, description, emoji, banner_text, is_active, sort_order, meta_title, meta_description) VALUES
 ('cat-beauty-skincare', 'Beauty & Skincare', 'beauty-skincare', 'Glow serums, hydrating creams, natural oils, luxury makeup & signature fragrances.', '💄', 'Radiate confidence & timeless glow', 1, 2, 'Women''s Beauty & Skincare Products Online', 'Discover premium skincare, serums, lipsticks and halal fragrances at Ruby''s.pk.');
@@ -815,5 +822,8 @@ INSERT OR IGNORE INTO product_images (id, product_id, image_url, alt_text, sort_
 ('pi-bs-50-4', 'p-bs-50', 'https://www.markaz.app/api/export/image/238-77-391595-product-4.jpg?src=https%3A%2F%2Fstatic.markaz.app%2Fpakistan%2Fproducts%2F238-77-391595-product-4.jpg', 'Exfoliating & Night Cream Set for All Skin Types', 3, 0),
 ('pi-bs-50-5', 'p-bs-50', 'https://www.markaz.app/api/export/image/238-77-391595-product-5.jpg?src=https%3A%2F%2Fstatic.markaz.app%2Fpakistan%2Fproducts%2F238-77-391595-product-5.jpg', 'Exfoliating & Night Cream Set for All Skin Types', 4, 0),
 ('pi-bs-50-6', 'p-bs-50', 'https://www.markaz.app/api/export/image/238-77-391595-product-1-withcode.jpg?src=https%3A%2F%2Fstatic.markaz.app%2Fpakistan%2Fproducts%2F238-77-391595-product-1-withcode.jpg', 'Exfoliating & Night Cream Set for All Skin Types', 5, 0);
+
+-- Mark the import as applied ---------------------------------
+INSERT OR IGNORE INTO applied_imports (name) VALUES ('beauty-skincare-catalog.sql');
 
 -- End of Beauty & Skincare import ----------------------------
