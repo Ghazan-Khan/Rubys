@@ -16,11 +16,34 @@ const globalForDb = globalThis as unknown as { __rubysDb?: DatabaseSync };
  * Keeps the admin dashboard deployable without ever resetting data.
  */
 function applyMigrations(database: DatabaseSync) {
+  const hasAppliedTable = database
+    .prepare("SELECT 1 AS ok FROM sqlite_master WHERE type = 'table' AND name = 'applied_imports'")
+    .get();
+
+  if (!hasAppliedTable) {
+    database.exec(`
+      CREATE TABLE IF NOT EXISTS applied_imports (
+        name        TEXT PRIMARY KEY,
+        applied_at  TEXT NOT NULL DEFAULT (datetime('now'))
+      );
+    `);
+  }
+
+  const appliedStatement = database.prepare('SELECT 1 AS ok FROM applied_imports WHERE name = ?');
+
   const migrationsPath = path.join(process.cwd(), 'database', 'migrations.sql');
-  if (fs.existsSync(migrationsPath)) {
-    database.exec('PRAGMA foreign_keys = OFF;');
-    database.exec(fs.readFileSync(migrationsPath, 'utf8'));
-    database.exec('PRAGMA foreign_keys = ON;');
+  if (fs.existsSync(migrationsPath) && !appliedStatement.get('migrations.sql')) {
+    database.exec('BEGIN IMMEDIATE;');
+    try {
+      database.exec('PRAGMA foreign_keys = OFF;');
+      database.exec(fs.readFileSync(migrationsPath, 'utf8'));
+      database.exec('PRAGMA foreign_keys = ON;');
+      database.prepare('INSERT OR IGNORE INTO applied_imports (name) VALUES (?)').run('migrations.sql');
+      database.exec('COMMIT;');
+    } catch (err) {
+      database.exec('ROLLBACK;');
+      throw err;
+    }
   }
 
   const columns = database
@@ -35,19 +58,19 @@ function applyMigrations(database: DatabaseSync) {
     database.exec('ALTER TABLE products ADD COLUMN deleted_at TEXT');
   }
 
-  database.exec('CREATE INDEX IF NOT EXISTS idx_products_deleted ON products(deleted_at)');
+  if (!appliedStatement.get('idx_products_deleted')) {
+    database.exec('CREATE INDEX IF NOT EXISTS idx_products_deleted ON products(deleted_at)');
+    database.prepare('INSERT OR IGNORE INTO applied_imports (name) VALUES (?)').run('idx_products_deleted');
+  }
 
-  // Curated catalogue imports. Each file records itself in `applied_imports`
-  // when it runs, so later opens stay read-only and cannot contend for the
-  // SQLite write lock (important when Next.js build workers open the DB).
-  const appliedStatement = database
-    .prepare("SELECT 1 AS ok FROM sqlite_master WHERE type = 'table' AND name = 'applied_imports'")
-    .get()
-    ? database.prepare('SELECT 1 AS ok FROM applied_imports WHERE name = ?')
-    : null;
-
-  for (const file of ['beauty-skincare-catalog.sql']) {
-    if (appliedStatement?.get(file)) continue;
+  for (const file of [
+    'beauty-skincare-catalog.sql',
+    'clothing-fashion-catalog.sql',
+    'bags-accessories-catalog.sql',
+    'shoes-footwear-catalog.sql',
+    'lifestyle-personal-catalog.sql',
+  ]) {
+    if (appliedStatement.get(file)) continue;
 
     const catalogPath = path.join(process.cwd(), 'database', file);
     if (!fs.existsSync(catalogPath)) continue;
@@ -69,7 +92,7 @@ function openDatabase(): DatabaseSync {
 
   database.exec('PRAGMA foreign_keys = ON;');
   database.exec('PRAGMA journal_mode = WAL;');
-  database.exec('PRAGMA busy_timeout = 5000;');
+  database.exec('PRAGMA busy_timeout = 30000;');
 
   const hasSchema = database
     .prepare("SELECT name FROM sqlite_master WHERE type = 'table' AND name = 'products'")

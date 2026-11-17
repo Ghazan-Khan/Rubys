@@ -96,7 +96,7 @@ Admin accounts are not configured through the app. Use `npm run admin:create`; f
 
 ## Database
 
-The schema lives in [`database.sql`](database.sql) and sample data in [`database/seed.sql`](database/seed.sql). Both are executed by [`scripts/init-db.mjs`](scripts/init-db.mjs). Product imports live in their own files — currently [`database/beauty-skincare-catalog.sql`](database/beauty-skincare-catalog.sql), the supplier's 50-product Beauty & Skincare catalogue — which [`scripts/migrate-lib.mjs`](scripts/migrate-lib.mjs) applies after the admin migrations.
+The schema lives in [`database.sql`](database.sql) and sample data in [`database/seed.sql`](database/seed.sql). Both are executed by [`scripts/init-db.mjs`](scripts/init-db.mjs). Curated product imports live in their own category files — [`database/beauty-skincare-catalog.sql`](database/beauty-skincare-catalog.sql), [`database/clothing-fashion-catalog.sql`](database/clothing-fashion-catalog.sql), [`database/bags-accessories-catalog.sql`](database/bags-accessories-catalog.sql), [`database/shoes-footwear-catalog.sql`](database/shoes-footwear-catalog.sql), and [`database/lifestyle-personal-catalog.sql`](database/lifestyle-personal-catalog.sql) — which [`scripts/migrate-lib.mjs`](scripts/migrate-lib.mjs) applies after the admin migrations.
 
 Tables include users, sessions, addresses, categories, brands, products, product images/attributes, coupons, reviews, wishlist, orders, order items, newsletter subscribers, contact messages, shipping zones and blog posts. The admin dashboard adds these additive tables:
 
@@ -106,7 +106,7 @@ Tables include users, sessions, addresses, categories, brands, products, product
 - `applied_imports` — records which catalogue import files already ran, so startup never rewrites the database
 - `products.deleted_at` — soft-delete marker so deleting a product never breaks existing order history
 
-Apply admin migrations with `npm run db:migrate`. The same migrations run automatically every time the app opens an existing database, and they are idempotent. `db:migrate` never drops tables or resets data. Catalogue imports such as `database/beauty-skincare-catalog.sql` are applied once by the same script: the file records its name in `applied_imports` inside a single transaction, and later runs skip it, so startup never rewrites the database and cannot trip the SQLite write lock.
+Apply admin migrations with `npm run db:migrate`. The same migrations run automatically every time the app opens an existing database, and they are idempotent. `db:migrate` never drops tables or resets data. Curated catalogue imports are applied once by the same script: each file records its name in `applied_imports` inside a single transaction, and later runs skip it, so startup never rewrites the database and cannot trip the SQLite write lock.
 
 Prices are stored as **integer PKR**. The app uses Node's built-in `node:sqlite` driver through [`src/lib/db.ts`](src/lib/db.ts), so there is no native dependency to compile.
 

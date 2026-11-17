@@ -38,10 +38,25 @@ export function runMigrations(db, { log = () => {} } = {}) {
 
   db.exec('CREATE INDEX IF NOT EXISTS idx_products_deleted ON products(deleted_at)');
 
+  db.exec(`
+    CREATE TABLE IF NOT EXISTS applied_imports (
+      name        TEXT PRIMARY KEY,
+      applied_at  TEXT NOT NULL DEFAULT (datetime('now'))
+    );
+  `);
+  db.prepare('INSERT OR IGNORE INTO applied_imports (name) VALUES (?)').run('migrations.sql');
+  db.prepare('INSERT OR IGNORE INTO applied_imports (name) VALUES (?)').run('idx_products_deleted');
+
   // Curated catalogue imports. Each file records itself in `applied_imports`
   // when it runs, so later starts stay read-only and cannot contend for the
   // SQLite write lock (important when Next.js build workers open the DB).
-  const catalogFiles = ['beauty-skincare-catalog.sql'];
+  const catalogFiles = [
+    'beauty-skincare-catalog.sql',
+    'clothing-fashion-catalog.sql',
+    'bags-accessories-catalog.sql',
+    'shoes-footwear-catalog.sql',
+    'lifestyle-personal-catalog.sql',
+  ];
 
   for (const file of catalogFiles) {
     if (isImportApplied(db, file)) continue;
