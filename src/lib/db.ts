@@ -67,6 +67,7 @@ function applyMigrations(database: DatabaseSync) {
     'beauty-skincare-catalog.sql',
     'clothing-fashion-catalog.sql',
     'bags-accessories-catalog.sql',
+    'jewellery-watches-catalog.sql',
     'shoes-footwear-catalog.sql',
     'lifestyle-personal-catalog.sql',
   ]) {

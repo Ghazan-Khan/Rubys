@@ -56,14 +56,18 @@ export default function Footer({ categories = [] }: FooterProps) {
       <div className="mx-auto max-w-7xl px-4 py-14 sm:px-6 lg:px-8">
         <div className="grid gap-10 md:grid-cols-2 lg:grid-cols-6">
           <div className="lg:col-span-2">
-            <Link href="/" className="inline-flex items-center transition-opacity hover:opacity-90" aria-label="Ruby's.pk home">
+            <Link href="/" className="inline-flex items-center gap-2.5 sm:gap-3 transition-opacity hover:opacity-90" aria-label="Ruby's.pk home">
               <Image
                 src="/images/logo.webp"
                 alt="Ruby's.pk — Women's Fashion & Boutique"
-                width={170}
-                height={88}
-                className="h-11 sm:h-12 w-auto object-contain"
+                width={160}
+                height={82}
+                className="h-10 sm:h-11 w-auto object-contain"
               />
+              <span className="flex items-baseline font-black tracking-tighter text-2xl sm:text-3xl select-none leading-none drop-shadow-sm">
+                <span className="text-white font-black">Rubys</span>
+                <span className="text-ruby-500 font-black text-xl sm:text-2xl">.pk</span>
+              </span>
             </Link>
             <p className="mt-4 max-w-sm text-sm leading-relaxed text-gray-300">
               Your exclusive online destination for women&apos;s fashion, radiant skincare, luxury handbags, jewellery, and personal care across Pakistan. Enjoy fast shipping and Cash on Delivery nationwide.

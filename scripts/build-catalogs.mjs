@@ -156,6 +156,22 @@ const categoriesConfig = [
     importName: 'bags-accessories-catalog.sql',
   },
   {
+    category_id: 'cat-jewellery-watches',
+    category_name: 'Jewellery & Watches',
+    category_slug: 'jewellery-watches',
+    category_desc: 'Rose gold mesh watches, pearl necklaces, zircon studs, bridal sets & bangles.',
+    category_emoji: '✨',
+    category_banner: 'Sparkle for every special moment',
+    category_meta_title: "Women's Jewellery & Watches in Pakistan",
+    category_meta_desc: 'Shop exquisite watches, necklaces, earrings and jewellery pieces with cash on delivery.',
+    prefix: 'jw',
+    csvFile: fs.existsSync('C:/Users/FAIZANz COMp/.gemini/antigravity/brain/73233872-dd22-43a5-a6ee-4b8dde994b50/.user_uploaded/media_1794988305030_0eb387eb.csv')
+      ? 'C:/Users/FAIZANz COMp/.gemini/antigravity/brain/73233872-dd22-43a5-a6ee-4b8dde994b50/.user_uploaded/media_1794988305030_0eb387eb.csv'
+      : 'C:/Users/FAIZANz COMp/Downloads/Jewellery.csv',
+    outputFile: path.join(root, 'database', 'jewellery-watches-catalog.sql'),
+    importName: 'jewellery-watches-catalog.sql',
+  },
+  {
     category_id: 'cat-shoes-footwear',
     category_name: 'Shoes & Footwear',
     category_slug: 'shoes-footwear',

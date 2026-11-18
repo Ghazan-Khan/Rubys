@@ -19,14 +19,20 @@ export default async function AdminLoginPage() {
     <div className="flex min-h-screen items-center justify-center bg-charcoal-950 px-4 py-12">
       <div className="w-full max-w-md">
         <div className="mb-6 text-center">
-          <Image
-            src="/images/logo.webp"
-            alt="Ruby's.pk Admin"
-            width={180}
-            height={92}
-            priority
-            className="mx-auto h-14 w-auto object-contain drop-shadow-md"
-          />
+          <div className="inline-flex items-center justify-center gap-3">
+            <Image
+              src="/images/logo.webp"
+              alt="Ruby's.pk Admin"
+              width={140}
+              height={72}
+              priority
+              className="h-12 w-auto object-contain drop-shadow-md"
+            />
+            <span className="flex items-baseline font-black tracking-tighter text-3xl select-none leading-none drop-shadow-sm">
+              <span className="text-white font-black">Rubys</span>
+              <span className="text-ruby-500 font-black text-2xl">.pk</span>
+            </span>
+          </div>
           <h1 className="mt-4 text-xl font-bold tracking-tight text-white">
             Staff & Admin Portal
           </h1>

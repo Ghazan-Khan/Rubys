@@ -65,14 +65,18 @@ export default function AdminShell({ user, children }: AdminShellProps) {
   const sidebar = (
     <div className="flex h-full flex-col bg-charcoal-950 text-white">
       <div className="flex h-16 items-center gap-3 border-b border-white/10 px-4">
-        <Link href="/admin" className="inline-flex items-center">
+        <Link href="/admin" className="inline-flex items-center gap-2">
           <Image
             src="/images/logo.webp"
             alt="Ruby's.pk Admin"
-            width={120}
-            height={62}
-            className="h-8 w-auto object-contain"
+            width={100}
+            height={52}
+            className="h-7 w-auto object-contain"
           />
+          <span className="flex items-baseline font-black tracking-tighter text-lg select-none leading-none">
+            <span className="text-white font-black">Rubys</span>
+            <span className="text-ruby-400 font-black text-sm">.pk</span>
+          </span>
         </Link>
         <span className="rounded bg-ruby-900/60 px-1.5 py-0.5 text-[9px] font-bold uppercase tracking-wider text-ruby-200">
           Admin

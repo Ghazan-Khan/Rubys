@@ -53,17 +53,21 @@ export default function Header({ categories, user }: HeaderProps) {
           <div className="flex h-16 sm:h-20 items-center justify-between gap-4">
             <Link
               href="/"
-              className="group flex shrink-0 items-center transition-transform hover:scale-[1.02]"
+              className="group flex shrink-0 items-center gap-2.5 sm:gap-3 transition-transform hover:scale-[1.02]"
               aria-label="Ruby's.pk home"
             >
               <Image
                 src="/images/logo.webp"
                 alt="Ruby's.pk — Women's Fashion & Boutique"
-                width={170}
-                height={88}
+                width={160}
+                height={82}
                 priority
                 className="h-10 sm:h-12 w-auto object-contain drop-shadow-sm transition-opacity group-hover:opacity-95"
               />
+              <span className="flex items-baseline font-black tracking-tighter text-2xl sm:text-3xl select-none leading-none drop-shadow-sm">
+                <span className="text-charcoal-950 font-black">Rubys</span>
+                <span className="text-ruby-600 font-black text-xl sm:text-2xl">.pk</span>
+              </span>
             </Link>
 
             <form action="/shop" className="hidden max-w-xl flex-1 md:flex">
@@ -216,13 +220,19 @@ export default function Header({ categories, user }: HeaderProps) {
       {isMenuOpen && (
         <div className="max-h-[80vh] overflow-y-auto border-b border-gray-200 bg-white shadow-xl md:hidden">
           <div className="flex items-center justify-between border-b border-ruby-100 bg-gradient-to-r from-ruby-50 to-white px-5 py-3">
-            <Image
-              src="/images/logo.webp"
-              alt="Ruby's.pk"
-              width={130}
-              height={66}
-              className="h-8 w-auto object-contain"
-            />
+            <div className="flex items-center gap-2">
+              <Image
+                src="/images/logo.webp"
+                alt="Ruby's.pk"
+                width={110}
+                height={56}
+                className="h-8 w-auto object-contain"
+              />
+              <span className="flex items-baseline font-black tracking-tighter text-xl select-none leading-none drop-shadow-sm">
+                <span className="text-charcoal-950 font-black">Rubys</span>
+                <span className="text-ruby-600 font-black text-base">.pk</span>
+              </span>
+            </div>
             <span className="text-[11px] font-semibold uppercase tracking-wider text-ruby-700">Women's Boutique</span>
           </div>
           <div className="space-y-1 px-4 py-3">
