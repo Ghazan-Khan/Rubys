@@ -1,6 +1,7 @@
 'use client';
 
 import Link from 'next/link';
+import Image from 'next/image';
 import { usePathname } from 'next/navigation';
 import { EnvelopeIcon, MapPinIcon, PhoneIcon } from '@heroicons/react/24/outline';
 import { SITE } from '@/lib/constants';
@@ -51,21 +52,21 @@ export default function Footer({ categories = [] }: FooterProps) {
   ];
 
   return (
-    <footer className="bg-charcoal-950 text-white">
+    <footer className="border-t border-ruby-950/60 bg-gradient-to-b from-charcoal-950 via-[#180507] to-charcoal-950 text-white">
       <div className="mx-auto max-w-7xl px-4 py-14 sm:px-6 lg:px-8">
         <div className="grid gap-10 md:grid-cols-2 lg:grid-cols-6">
           <div className="lg:col-span-2">
-            <Link href="/" className="inline-flex items-center gap-2">
-              <span className="flex h-9 w-9 items-center justify-center rounded-xl bg-ruby-600 text-lg font-bold text-white">
-                R
-              </span>
-              <span className="text-xl font-bold">
-                Ruby&apos;s<span className="text-ruby-400">.pk</span>
-              </span>
+            <Link href="/" className="inline-flex items-center transition-opacity hover:opacity-90" aria-label="Ruby's.pk home">
+              <Image
+                src="/images/logo.webp"
+                alt="Ruby's.pk — Women's Fashion & Boutique"
+                width={170}
+                height={88}
+                className="h-11 sm:h-12 w-auto object-contain"
+              />
             </Link>
             <p className="mt-4 max-w-sm text-sm leading-relaxed text-gray-300">
-              Quality products, honest prices and dependable delivery across Pakistan — with a special
-              focus on Khyber Pakhtunkhwa. Cash on Delivery available nationwide.
+              Your exclusive online destination for women&apos;s fashion, radiant skincare, luxury handbags, jewellery, and personal care across Pakistan. Enjoy fast shipping and Cash on Delivery nationwide.
             </p>
             <div className="mt-5 space-y-2.5">
               <a href={`tel:${SITE.phone.replace(/\s/g, '')}`} className="flex items-center gap-2 text-sm text-gray-300 hover:text-white">

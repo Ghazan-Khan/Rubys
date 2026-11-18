@@ -2,6 +2,7 @@
 
 import { useState } from 'react';
 import Link from 'next/link';
+import Image from 'next/image';
 import { usePathname } from 'next/navigation';
 import {
   ArrowRightOnRectangleIcon,
@@ -63,16 +64,19 @@ export default function AdminShell({ user, children }: AdminShellProps) {
 
   const sidebar = (
     <div className="flex h-full flex-col bg-charcoal-950 text-white">
-      <div className="flex h-16 items-center gap-2 border-b border-white/10 px-5">
-        <span className="flex h-9 w-9 items-center justify-center rounded-xl bg-ruby-600 text-lg font-bold text-white">
-          R
+      <div className="flex h-16 items-center gap-3 border-b border-white/10 px-4">
+        <Link href="/admin" className="inline-flex items-center">
+          <Image
+            src="/images/logo.webp"
+            alt="Ruby's.pk Admin"
+            width={120}
+            height={62}
+            className="h-8 w-auto object-contain"
+          />
+        </Link>
+        <span className="rounded bg-ruby-900/60 px-1.5 py-0.5 text-[9px] font-bold uppercase tracking-wider text-ruby-200">
+          Admin
         </span>
-        <div>
-          <p className="text-sm font-bold leading-tight">
-            Ruby&apos;s<span className="text-ruby-400">.pk</span>
-          </p>
-          <p className="text-[10px] uppercase tracking-[0.18em] text-gray-400">Admin</p>
-        </div>
         <button
           type="button"
           className="ml-auto rounded-lg p-1.5 text-gray-400 hover:bg-white/10 hover:text-white lg:hidden"

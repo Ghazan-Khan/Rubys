@@ -18,29 +18,29 @@ export default function ProductCard({ product, className }: ProductCardProps) {
   return (
     <article
       className={cn(
-        'group relative flex flex-col overflow-hidden rounded-2xl border border-gray-100 bg-white shadow-sm transition-all duration-300 hover:-translate-y-1 hover:shadow-lg',
+        'group relative flex flex-col overflow-hidden rounded-2xl border border-gray-100/80 bg-white shadow-sm transition-all duration-300 hover:-translate-y-1 hover:border-ruby-200 hover:shadow-xl hover:shadow-ruby-950/5',
         className
       )}
     >
-      <div className="relative">
-        <Link href={`/product/${product.slug}`} aria-label={product.name} className="block">
+      <div className="relative overflow-hidden bg-gray-50/50">
+        <Link href={`/product/${product.slug}`} aria-label={product.name} className="block overflow-hidden">
           <ProductArtwork
             emoji={product.emoji}
             name={product.name}
             categoryName={product.categoryName}
             imageUrl={product.imageUrl}
-            className="aspect-square w-full"
+            className="aspect-square w-full transition-transform duration-500 group-hover:scale-105"
           />
         </Link>
 
         <div className="absolute left-3 top-3 flex flex-col gap-1.5">
           {product.badge && (
-            <span className="rounded-full bg-ruby-600 px-2.5 py-1 text-[10px] font-bold uppercase tracking-wide text-white shadow-sm">
+            <span className="rounded-full bg-gradient-to-r from-ruby-600 to-ruby-700 px-2.5 py-1 text-[10px] font-bold uppercase tracking-wide text-white shadow-sm ring-1 ring-white/20">
               {product.badge}
             </span>
           )}
           {percent != null && (
-            <span className="w-fit rounded-full bg-charcoal-900/85 px-2.5 py-1 text-[10px] font-bold text-white">
+            <span className="w-fit rounded-full bg-ruby-900/90 px-2.5 py-1 text-[10px] font-bold text-white shadow-sm backdrop-blur">
               -{percent}%
             </span>
           )}

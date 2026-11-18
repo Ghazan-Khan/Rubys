@@ -40,7 +40,7 @@ export default function Testimonials() {
 
         <div className="mt-9 grid gap-4 md:grid-cols-3">
           {TESTIMONIALS.map((testimonial) => (
-            <figure key={testimonial.name} className="flex flex-col rounded-2xl border border-gray-100 bg-white p-6 shadow-sm">
+            <figure key={testimonial.name} className="flex flex-col rounded-2xl border border-gray-100 bg-white p-6 shadow-sm transition-all duration-200 hover:border-ruby-200 hover:shadow-md">
               <div className="flex items-center gap-0.5">
                 {Array.from({ length: 5 }).map((_, index) => (
                   <StarIcon key={index} className="h-4 w-4 text-amber-400" />

@@ -6,8 +6,37 @@
 @tailwind utilities;
 
 :root {
-  --ruby-primary: #b91c1c;
-  --ruby-dark: #991b1b;
+  /* Ruby's Brand Identity (Extracted from 3D Ruby's Logo) */
+  --ruby-primary: #fb1b13;        /* Vivid Scarlet Bezel */
+  --ruby-secondary: #c21d1b;      /* Deep Crimson Plaque Face */
+  --ruby-accent: #720b0f;         /* 3D Extrusion Shadow */
+  --ruby-highlight: #ff4d47;      /* 3D Border Highlight */
+  --ruby-dark: #8f1114;           /* Rich Burgundy */
+
+  /* Backgrounds */
+  --ruby-bg: #ffffff;             /* Clean Canvas */
+  --ruby-bg-light: #fff5f5;       /* Soft Blush Tint */
+  --ruby-bg-subtle: #ffe6e6;      /* Chip/Tag Background */
+  --ruby-card-bg: #ffffff;        /* Product Card Background */
+
+  /* Typography */
+  --ruby-text: #1c1917;           /* Warm Charcoal Body */
+  --ruby-text-heading: #140304;   /* Deep Warm Black Headings */
+  --ruby-muted: #6b7280;          /* Secondary Muted Text */
+
+  /* Interactive Elements */
+  --ruby-button: #fb1b13;         /* Primary Action */
+  --ruby-button-hover: #c21d1b;   /* Action Hover */
+  --ruby-button-active: #9e1215;  /* Action Active */
+  --ruby-border: #fee2e2;         /* Gentle Ruby Border */
+  --ruby-border-strong: #ffcccc;  /* Emphasis Border */
+
+  /* Status Colors */
+  --ruby-success: #15803d;
+  --ruby-warning: #d97706;
+  --ruby-error: #fb1b13;
+
+  /* Legacy compatibility */
   --charcoal: #262626;
 }
 
@@ -19,6 +48,8 @@ body {
   font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  color: var(--ruby-text);
+  background-color: #fafafa;
 }
 
 [lang='ur'] {
@@ -27,8 +58,8 @@ body {
 }
 
 ::selection {
-  background-color: #fecaca;
-  color: #450a0a;
+  background-color: #ffcccc;
+  color: #720b0f;
 }
 
 .line-clamp-2 {

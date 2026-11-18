@@ -2,6 +2,7 @@
 
 import { useState } from 'react';
 import Link from 'next/link';
+import Image from 'next/image';
 import { usePathname } from 'next/navigation';
 import {
   MagnifyingGlassIcon,
@@ -40,23 +41,29 @@ export default function Header({ categories, user }: HeaderProps) {
   ];
 
   return (
-    <header className="sticky top-0 z-50 bg-white shadow-sm">
-      <div className="bg-ruby-700 px-4 py-2 text-center text-white">
-        <p className="text-[11px] font-medium sm:text-xs">
+    <header className="sticky top-0 z-50 bg-white shadow-sm border-b border-ruby-100">
+      <div className="bg-gradient-to-r from-ruby-700 via-ruby-600 to-ruby-800 px-4 py-2 text-center text-white shadow-sm">
+        <p className="text-[11px] font-medium tracking-wide sm:text-xs">
           🚚 Free delivery on orders above Rs. 2,000 in KPK · Cash on Delivery across Pakistan
         </p>
       </div>
 
-      <div className="border-b border-gray-200">
+      <div className="border-b border-gray-100">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-          <div className="flex h-16 items-center justify-between gap-4">
-            <Link href="/" className="flex shrink-0 items-center gap-2" aria-label="Ruby's.pk home">
-              <span className="flex h-9 w-9 items-center justify-center rounded-xl bg-ruby-600 text-lg font-bold text-white shadow-sm">
-                R
-              </span>
-              <span className="text-xl font-bold tracking-tight text-charcoal-900">
-                Ruby&apos;s<span className="text-ruby-600">.pk</span>
-              </span>
+          <div className="flex h-16 sm:h-20 items-center justify-between gap-4">
+            <Link
+              href="/"
+              className="group flex shrink-0 items-center transition-transform hover:scale-[1.02]"
+              aria-label="Ruby's.pk home"
+            >
+              <Image
+                src="/images/logo.webp"
+                alt="Ruby's.pk — Women's Fashion & Boutique"
+                width={170}
+                height={88}
+                priority
+                className="h-10 sm:h-12 w-auto object-contain drop-shadow-sm transition-opacity group-hover:opacity-95"
+              />
             </Link>
 
             <form action="/shop" className="hidden max-w-xl flex-1 md:flex">
@@ -207,7 +214,17 @@ export default function Header({ categories, user }: HeaderProps) {
       </nav>
 
       {isMenuOpen && (
-        <div className="max-h-[75vh] overflow-y-auto border-b border-gray-200 bg-white md:hidden">
+        <div className="max-h-[80vh] overflow-y-auto border-b border-gray-200 bg-white shadow-xl md:hidden">
+          <div className="flex items-center justify-between border-b border-ruby-100 bg-gradient-to-r from-ruby-50 to-white px-5 py-3">
+            <Image
+              src="/images/logo.webp"
+              alt="Ruby's.pk"
+              width={130}
+              height={66}
+              className="h-8 w-auto object-contain"
+            />
+            <span className="text-[11px] font-semibold uppercase tracking-wider text-ruby-700">Women's Boutique</span>
+          </div>
           <div className="space-y-1 px-4 py-3">
             {navLinks.map((link) => (
               <Link

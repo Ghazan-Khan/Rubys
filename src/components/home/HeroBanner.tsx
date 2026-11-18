@@ -13,9 +13,9 @@ export default function HeroBanner({ products }: HeroBannerProps) {
   const secondary = products.slice(1, 3);
 
   return (
-    <section className="relative overflow-hidden bg-[radial-gradient(circle_at_top_left,#7f1d1d_0%,#991b1b_38%,#450a0a_100%)] text-white">
-      <div className="absolute -left-32 top-10 h-80 w-80 rounded-full bg-ruby-500/20 blur-3xl" />
-      <div className="absolute -right-20 bottom-0 h-96 w-96 rounded-full bg-orange-400/10 blur-3xl" />
+    <section className="relative overflow-hidden bg-[radial-gradient(circle_at_top_left,#c21d1b_0%,#9e1215_45%,#420608_100%)] text-white">
+      <div className="absolute -left-32 top-10 h-80 w-80 rounded-full bg-ruby-500/25 blur-3xl" />
+      <div className="absolute -right-20 bottom-0 h-96 w-96 rounded-full bg-ruby-400/15 blur-3xl" />
       <div className="relative mx-auto grid max-w-7xl gap-10 px-4 py-14 sm:px-6 lg:grid-cols-[1.05fr_0.95fr] lg:items-center lg:px-8 lg:py-20">
         <div className="animation-fade-up">
           <div className="inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/10 px-3 py-1.5 text-[11px] font-semibold uppercase tracking-wider text-ruby-100 backdrop-blur">

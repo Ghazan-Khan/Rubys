@@ -1,4 +1,5 @@
 import type { Metadata } from 'next';
+import Image from 'next/image';
 import { redirect } from 'next/navigation';
 import AdminLoginForm from '@/components/admin/AdminLoginForm';
 import { getAdminUser } from '@/lib/admin-auth';
@@ -18,11 +19,16 @@ export default async function AdminLoginPage() {
     <div className="flex min-h-screen items-center justify-center bg-charcoal-950 px-4 py-12">
       <div className="w-full max-w-md">
         <div className="mb-6 text-center">
-          <div className="mx-auto flex h-14 w-14 items-center justify-center rounded-2xl bg-ruby-600 text-2xl font-bold text-white shadow-lg shadow-ruby-950/40">
-            R
-          </div>
-          <h1 className="mt-4 text-2xl font-extrabold tracking-tight text-white">
-            Ruby&apos;s<span className="text-ruby-400">.pk</span> Admin
+          <Image
+            src="/images/logo.webp"
+            alt="Ruby's.pk Admin"
+            width={180}
+            height={92}
+            priority
+            className="mx-auto h-14 w-auto object-contain drop-shadow-md"
+          />
+          <h1 className="mt-4 text-xl font-bold tracking-tight text-white">
+            Staff & Admin Portal
           </h1>
           <p className="mt-1 text-sm text-gray-400">Sign in to manage products, orders and customers.</p>
         </div>

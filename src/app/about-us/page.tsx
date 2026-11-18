@@ -63,11 +63,9 @@ export default function AboutUsPage() {
               choices accordingly. At the same time, we ship to every province in Pakistan.
             </p>
 
-            <h2>What we sell</h2>
+            <h2>What we offer</h2>
             <p>
-              Our range focuses on things people actually use: everyday clothing, practical electronics, home
-              essentials, skincare, fitness gear and books. We add products slowly, based on customer requests and
-              our own testing, rather than listing everything we can find.
+              Our range focuses on curated women&apos;s essentials: luxury pret &amp; festive wear, radiant skincare, designer handbags, fine jewellery, elegant footwear, and personal care. We select every piece with care, based on quality, fabric standards, and customer delight, rather than listing unverified items.
             </p>
 
             <h2>How we work</h2>

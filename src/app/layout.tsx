@@ -13,7 +13,7 @@ export const dynamic = 'force-dynamic';
 export const viewport: Viewport = {
   width: 'device-width',
   initialScale: 1,
-  themeColor: '#b91c1c',
+  themeColor: '#fb1b13',
 };
 
 export const metadata: Metadata = {
@@ -39,20 +39,40 @@ export const metadata: Metadata = {
   publisher: "Ruby's.pk",
   formatDetection: { email: false, address: false, telephone: false },
   alternates: { canonical: '/' },
+  icons: {
+    icon: [
+      { url: '/favicon-32.png', sizes: '32x32', type: 'image/png' },
+      { url: '/icon-192.png', sizes: '192x192', type: 'image/png' },
+      { url: '/icon.svg', type: 'image/svg+xml' },
+    ],
+    apple: [
+      { url: '/apple-touch-icon.png', sizes: '180x180', type: 'image/png' },
+    ],
+  },
+  manifest: '/manifest.webmanifest',
   openGraph: {
     type: 'website',
     locale: 'en_PK',
     url: SITE.url,
     siteName: "Ruby's.pk",
-    title: "Ruby's.pk - Premium Online Shopping in Pakistan",
+    title: "Ruby's.pk - Women's Fashion, Beauty, Jewellery & Lifestyle | Pakistan",
     description:
-      "Quality products, fast nationwide delivery and Cash on Delivery. Serving KPK and all of Pakistan.",
+      "Curated women's fashion, skincare, bags, footwear & jewellery with Cash on Delivery across Pakistan.",
+    images: [
+      {
+        url: '/images/logo-original.jpg',
+        width: 1024,
+        height: 576,
+        alt: "Ruby's.pk - Premium Online Boutique for Women",
+      },
+    ],
   },
   twitter: {
     card: 'summary_large_image',
-    title: "Ruby's.pk - Premium Online Shopping in Pakistan",
+    title: "Ruby's.pk - Women's Fashion, Beauty, Jewellery & Lifestyle | Pakistan",
     description:
-      "Quality products, fast nationwide delivery and Cash on Delivery. Serving KPK and all of Pakistan.",
+      "Curated women's fashion, skincare, bags, footwear & jewellery with Cash on Delivery across Pakistan.",
+    images: ['/images/logo-original.jpg'],
   },
   robots: {
     index: true,

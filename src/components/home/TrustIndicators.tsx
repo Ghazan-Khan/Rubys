@@ -29,7 +29,7 @@ export default function TrustIndicators() {
       <div className="mx-auto grid max-w-7xl grid-cols-1 gap-5 px-4 sm:grid-cols-2 sm:px-6 lg:grid-cols-4 lg:px-8">
         {indicators.map((indicator) => (
           <div key={indicator.title} className="flex items-start gap-3.5">
-            <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-white text-ruby-600 shadow-sm ring-1 ring-gray-100">
+            <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-ruby-50/80 text-ruby-600 shadow-sm ring-1 ring-ruby-100">
               <indicator.icon className="h-5 w-5" />
             </div>
             <div>
