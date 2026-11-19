@@ -2,6 +2,9 @@ import { NextResponse } from 'next/server';
 import { getCurrentUser } from '@/lib/auth';
 import { getProductById, addReview } from '@/lib/products';
 
+// Reviews are request-specific; never evaluate this route at build time.
+export const dynamic = 'force-dynamic';
+
 export async function POST(request: Request) {
   const user = await getCurrentUser();
   if (!user) {

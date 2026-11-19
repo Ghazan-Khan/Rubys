@@ -11,6 +11,32 @@ const databasePath = path.resolve(
 
 const globalForDb = globalThis as unknown as { __rubysDb?: DatabaseSync };
 
+let databaseInstance: DatabaseSync | undefined;
+
+/**
+ * Open the database only when a query is actually executed.
+ *
+ * Next.js imports route modules at build time to collect page data. If the
+ * connection were opened at module scope, the build would create/migrate the
+ * SQLite file and contend with any existing WAL lock. Keeping this lazy means
+ * importing this module has no filesystem or database side effects.
+ */
+function getDb(): DatabaseSync {
+  if (databaseInstance) return databaseInstance;
+
+  if (globalForDb.__rubysDb) {
+    databaseInstance = globalForDb.__rubysDb;
+    return databaseInstance;
+  }
+
+  const database = openDatabase();
+  databaseInstance = database;
+  if (process.env.NODE_ENV !== 'production') {
+    globalForDb.__rubysDb = database;
+  }
+  return database;
+}
+
 /**
  * Additive, idempotent migrations for existing databases.
  * Keeps the admin dashboard deployable without ever resetting data.
@@ -117,29 +143,27 @@ function openDatabase(): DatabaseSync {
   return database;
 }
 
-export const db: DatabaseSync = globalForDb.__rubysDb ?? openDatabase();
-if (process.env.NODE_ENV !== 'production') globalForDb.__rubysDb = db;
-
 export function all<T>(sql: string, params: SqlValue[] = []): T[] {
-  return db.prepare(sql).all(...params) as unknown as T[];
+  return getDb().prepare(sql).all(...params) as unknown as T[];
 }
 
 export function get<T>(sql: string, params: SqlValue[] = []): T | undefined {
-  return db.prepare(sql).get(...params) as unknown as T | undefined;
+  return getDb().prepare(sql).get(...params) as unknown as T | undefined;
 }
 
 export function run(sql: string, params: SqlValue[] = []) {
-  return db.prepare(sql).run(...params);
+  return getDb().prepare(sql).run(...params);
 }
 
 export function transaction<T>(callback: () => T): T {
-  db.exec('BEGIN IMMEDIATE;');
+  const database = getDb();
+  database.exec('BEGIN IMMEDIATE;');
   try {
     const result = callback();
-    db.exec('COMMIT;');
+    database.exec('COMMIT;');
     return result;
   } catch (error) {
-    db.exec('ROLLBACK;');
+    database.exec('ROLLBACK;');
     throw error;
   }
 }
